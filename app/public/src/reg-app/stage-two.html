@@ -1,0 +1,109 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="stage-two">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+   <div id="step-2" class="tab-pane">
+
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Gender</label>
+            <div class="col-sm-9">
+              <div class="radio col-sm-6">
+                <label>
+                  <input type="radio" name="gender" value="M"> Male
+                </label>
+              </div>
+              <div class="radio col-sm-6">
+                <label>
+                  <input type="radio" name="gender" value="F" checked="checked"> Female
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-control-6">Date of Birth</label>
+            <div class="col-sm-9">
+              <input name="dob" type="date" min="2000-01-01" max="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth.">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-control-6">Marital Status</label>
+            <div class="col-sm-9">
+              <select id="form-control-6" class="form-control custom-select">
+                <option value="none">- Select -</option>
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-control-6">Any Form of Disability</label>
+            <div class="col-sm-9">
+              <select id="form-control-6" class="form-control custom-select">
+                <option value="none">- Select -</option>
+                <option value="Single">YES</option>
+                <option value="Divorced">NO</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-control-7">Identification Type</label>
+            <div class="col-sm-9">
+              <select id="form-control-7" class="form-control custom-select">
+                <option value="none">- Select -</option>
+                <option value="VOTERS">Voters</option>
+                <option value="NHIS">NHIS</option>
+                <option value="DRIVERS">Drivers Licence</option>
+                <option value="PASSPORT">Passport</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="idn" class="col-sm-3 control-label">Identification Number</label>
+            <div class="col-sm-9">
+            <input id="idn" class="form-control" type="text" name="idn" placeholder="eg. 3435560098">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+          </div>
+
+      </div>
+    </div>
+      
+    </div>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class StageTwo extends Polymer.Element {
+      static get is() { return 'stage-two'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'stage-two'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(StageTwo.is, StageTwo);
+  </script>
+</dom-module>

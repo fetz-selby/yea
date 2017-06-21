@@ -1,0 +1,300 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="reg-app">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div>
+      <form id="demo-form-wizard-2" data-toggle="validator" novalidate="novalidate">
+          <ul class="steps">
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-1" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Basic Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Personal Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span class="step-icon icon icon-cubes"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Program Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span class="step-icon icon icon-credit-card"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Account Details</strong>
+              </div>
+            </li>
+          </ul>
+          <div class="tab-content">
+
+            <div id="step-1" class="tab-pane active">
+              <h4 class="text-center m-y-md">
+                <span>Basic Information</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group has-error">
+                    <label for="fname" class="control-label">First Name</label>
+                    <input id="fname" class="form-control" type="text" name="fname" spellcheck="false" autocomplete="off" data-rule-required="true" data-rule-alphanumeric="false" data-msg-required="Please enter your first name." data-msg-alphanumeric="First Name must not be alpha-numeric characters, or underscores." aria-required="true" aria-describedby="fname-error">
+                    <small class="help-block" style="display: none;">Only letters are allowed.</small>
+                  <small id="fname-error" class="has-error help-block">Please enter your first name.</small>
+                  </div>
+
+                  <div class="form-group has-error">
+                    <label for="mname" class="control-label">Middle Name</label>
+                    <input id="mname" class="form-control" type="text" name="mname" spellcheck="false" autocomplete="off" data-rule-alphanumeric="false" data-msg-required="Please enter your middle." data-msg-alphanumeric="Middle Name must not be alpha-numeric characters, or underscores." aria-describedby="mname-error">
+                    <small class="help-block" style="display: none;">Only letters are allowed.</small>
+                  <small id="mname-error" class="has-error help-block">Please enter your middle name.</small>
+                  </div>
+
+                  <div class="form-group has-error">
+                    <label for="lname" class="control-label">Last Name</label>
+                    <input id="lname" class="form-control" type="text" name="lname" spellcheck="false" autocomplete="off" data-rule-required="true" data-rule-alphanumeric="false" data-msg-required="Please enter your username." data-msg-alphanumeric="Last Name must not be alpha-numeric characters, or underscores." aria-required="true" aria-describedby="lname-error">
+                    <small class="help-block" style="display: none;">Only letters are allowed.</small>
+                  <small id="lname-error" class="has-error help-block">Please enter your last name.</small>
+                  </div>
+
+                  <div class="form-group has-error">
+                    <label for="email-2" class="control-label">Email address</label>
+                    <input id="email-2" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" data-rule-required="true" data-rule-email="true" data-msg-required="Please enter your email address." aria-required="true" aria-describedby="email-2-error">
+                    <small class="help-block" style="display: none;">You will occasionally receive account related emails.</small>
+                  <small id="email-2-error" class="has-error help-block">Please enter your email address.</small>
+                  </div>
+
+                  <div class="form-group has-error">
+                    <label for="username-2" class="control-label">Phone Number</label>
+                    <input id="username-2" class="form-control" type="text" name="phone" spellcheck="false" autocomplete="off" data-rule-required="true" data-rule-numeric="true" data-msg-required="Please enter your phone number." data-msg-numeric="Phone number must be numeric characters only." aria-required="true" aria-describedby="username-2-error">
+                    <small class="help-block" style="display: none;">Only letters, numbers, and underscores are allowed.</small>
+                  <small id="username-2-error" class="has-error help-block">Please enter your username.</small>
+                  </div>
+
+                 <!--  <div class="form-group has-error">
+                    <label for="password-2" class="control-label">Password</label>
+                    <div class="input-group">
+                      <input id="password-2" class="form-control" type="password" name="password_2" data-rule-required="true" data-rule-minlength="6" data-msg-required="Please enter your password." data-msg-minlength="Password must be 6 characters or more." aria-required="true" aria-describedby="password-2-error">
+                      <span class="input-group-addon">
+                        <label class="custom-control custom-control-primary custom-checkbox">
+                          <input class="custom-control-input" type="checkbox" name="password_toggler">
+                          <span class="custom-control-indicator"></span>
+                          <span class="custom-control-label">Show</span>
+                        </label>
+                      </span>
+                    </div>
+                    <small class="help-block" style="display: none;">6-character minimum; case sensitive.</small>
+                  <small id="password-2-error" class="has-error help-block">Please enter your password.</small>
+                  </div> -->
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="step-2" class="tab-pane">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Gender</label>
+                    <div class="col-sm-9">
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="gender" value="M"> Male
+                        </label>
+                      </div>
+                      <div class="radio">
+                        <label>
+                          <input type="radio" name="gender" value="F" checked="checked"> Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Date of Birth</label>
+                    <input name="dob" type="date" min="2000-01-01" max="1982-01-01" data-rule-required="true" data-msg-required="Please enter your date of birth.">
+                    <small class="help-block" style="display: none;">Date of Birth</small>
+                  <small id="dob-error" class="has-error help-block">Please enter your date of Birth</small>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Marital Status</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Any Form of Disability</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="Single">YES</option>
+                        <option value="Divorced">NO</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Identification Type</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="VOTERS">Voters</option>
+                        <option value="NHIS">NHIS</option>
+                        <option value="DRIVERS">Drivers Licence</option>
+                        <option value="PASSPORT">Passport</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group has-error">
+                    <label for="idn" class="control-label">Identification Number</label>
+                    <input id="idn" class="form-control" type="text" name="idn" spellcheck="false" autocomplete="off" data-rule-required="true" data-rule-alphanumeric="true" data-msg-required="Please enter identification number." data-msg-alphanumeric="identification number required." aria-required="true" aria-describedby="idn-error">
+                    <small class="help-block" style="display: none;">Alpha Numeric letters are allowed.</small>
+                  <small id="idn-error" class="has-error help-block">Please enter identification number.</small>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+
+              </div>
+            </div>
+              
+              
+            </div>
+
+
+           <div id="step-3" class="tab-pane">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Regions</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Districts</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Programme</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+                  
+              </div>
+            </div>
+              
+              
+          </div>
+
+          <div id="step-4" class="tab-pane">
+              <h4 class="text-center m-y-md">
+                <span>Enter your payment details</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label for="creditcard-type-2" class="control-label">Card type</label>
+                    <select id="creditcard-type-2" class="custom-select" name="creditcard_type_2" data-rule-required="true" data-msg-required="Please select your credit card type." aria-required="true">
+                      <option value="" selected="selected">Select a card</option>
+                      <option value="v">Visa</option>
+                      <option value="m">MasterCard</option>
+                      <option value="a">American Express</option>
+                      <option value="d">Discover</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="creditcard-number-2" class="control-label">Card number</label>
+                    <input id="creditcard-number-2" class="form-control" type="text" name="creditcard_number_2" data-rule-required="true" data-rule-creditcard="true" data-msg-required="Please enter your credit card number." data-msg-creditcard="Please enter a valid credit card number." aria-required="true">
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="coupon-code-2" class="control-label">Coupon code</label>
+                    <input id="coupon-code-2" class="form-control" type="text" name="coupon_code_2">
+                  </div>
+                  <div class="form-group">
+                    <p>
+                      <small>By clicking Submit, you agree to our <a href="#">Terms</a> and that you have read our <a href="#">Data Policy</a>, including our <a href="#">Cookie Use</a>.</small>
+                    </p>
+                    <button class="btn btn-primary btn-block" type="submit">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class RegApp extends Polymer.Element {
+      static get is() { return 'reg-app'; }
+      static get properties() {
+        return {
+          // prop1: {
+          //   type: String,
+          //   value: 'reg-app'
+          // }
+        };
+      }
+    }
+
+    window.customElements.define(RegApp.is, RegApp);
+  </script>
+</dom-module>

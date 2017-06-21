@@ -1,0 +1,471 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+<dom-module id="reg-app">
+
+  <template>
+     <iron-ajax id='regions' method="GET" handle-as="json" on-response="_handleRegionResponse" debounce-duration="0" on-error="_onRegionErrorRequest"></iron-ajax>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .ezwich-style{width: 64px; padding-bottom: 5px;}
+      .custom-hide{display: none;}
+    </style>
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../assets/css/vendor.min.css">
+    <link rel="stylesheet" href="../../assets/css/elephant.min.css">
+    <link rel="stylesheet" href="../../assets/css/application.min.css">
+    <link rel="stylesheet" href="../../assets/css/demo.min.css">
+
+    <div id="page" class="container">
+      <form id="demo-form-wizard-2" data-toggle="validator" novalidate="novalidate">
+          <ul class="steps">
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-1" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Basic Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Personal Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span class="step-icon icon icon-cubes"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Program Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span class="step-icon icon icon-credit-card"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Account Details</strong>
+              </div>
+            </li>
+          </ul>
+          <div class="tab-content">
+
+            <div id="step1" class="tab-pane custom-hide">
+              <h4 class="text-center m-y-md">
+                <span>Basic Information</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label for="fname" class="control-label col-sm-3">First Name</label>
+                    <div class="col-sm-9">
+                      <input id="fname" class="form-control" type="text" name="fname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="mname" class="control-label col-sm-3">Middle Name</label>
+                    <div class="col-sm-9">
+                      <input id="mname" class="form-control" type="text" name="mname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="lname" class="control-label col-sm-3">Last Name</label>
+                    <div class="col-sm-9">
+                      <input id="lname" class="form-control" type="text" name="lname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="control-label col-sm-3">Email address</label>
+                    <div class="col-sm-9">
+                      <input id="email" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" >
+                    </div>
+                    
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="control-label col-sm-3">Phone Number</label>
+                    <div class="col-sm-9">
+                      <input id="phone" class="form-control" type="text" name="phone" spellcheck="false" autocomplete="off">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveOne">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="step2" class="tab-pane custom-hide">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Gender</label>
+                    <div class="col-sm-9">
+                      <div class="radio col-sm-6">
+                        <label>
+                          <input id="m_check" type="radio" name="gender" value="M"> Male
+                        </label>
+                      </div>
+                      <div class="radio col-sm-6">
+                        <label>
+                          <input id="f_check" type="radio" name="gender" value="F"> Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="dob">Date of Birth</label>
+                    <div class="col-sm-9">
+                      <input id="dob" name="dob" type="date" min="2000-01-01" max="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="level">Literacy Level</label>
+                    <div class="col-sm-9">
+                      <select id="level" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="zero">NONE</option>\
+                        <option value="Basic">Basic</option>
+                        <option value="Primary">Primary</option>
+                        <option value="Secondary">Secondary</option>
+                        <option value="Tertiary">Tertiary</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="m_status">Marital Status</label>
+                    <div class="col-sm-9">
+                      <select id="m_status" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="sick">Any Form of Disability</label>
+                    <div class="col-sm-9">
+                      <select id="sick" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="Single">YES</option>
+                        <option value="Divorced">NO</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="id_type">Identification Type</label>
+                    <div class="col-sm-9">
+                      <select id="id_type" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="VOTERS">Voters</option>
+                        <option value="NHIS">NHIS</option>
+                        <option value="DRIVERS">Drivers Licence</option>
+                        <option value="PASSPORT">Passport</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="idn" class="col-sm-3 control-label">Identification Number</label>
+                    <div class="col-sm-9">
+                    <input id="idn" class="form-control" type="text" name="idn" placeholder="eg. 3435560098">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwo">Next</button>
+                  </div>
+
+              </div>
+            </div>
+              
+            </div>
+
+
+           <div id="step3" class="tab-pane custom-hide">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Regions</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <template is="dom-repeat" items="{{regions}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}}</option>
+                        </template>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Districts</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Programme</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Next</button>
+                  </div>
+                  
+              </div>
+            </div>
+              
+              
+          </div>
+
+          <div id="step4" class="tab-pane custom-hide">
+              <h4 class="text-center m-y-md">
+                <span>Enter your payment details</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-3 control-label">
+                      <img class="ezwich-style" src="../../assets/img/ezwich.png">
+                    </div>
+                    <div class="col-sm-9">
+                      <input id="ezw" class="form-control" type="text" name="ezw" placeholder="Enter Ezwich Number">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="creditcard-number-2" class="control-label col-sm-3">Confirm Card Number</label>
+                    <div class="col-sm-9">
+                      <input id="creditcard-number-2" class="form-control" type="text" name="creditcard_number_2" placeholder="Confirm Ezwich Number">
+                    </div>
+                  </div>
+                 
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onDone">Register</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- form -->  
+        </form>
+      </div>
+      <script src="/../../bower_components/jquery/dist/jquery.min.js"></script>
+
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class RegApp extends Polymer.Element {
+      connectedCallback(){
+        super.ready();
+        this.$.step3.style = 'display:block;';
+                this._loadAllRegions();
+
+        //this.user = {};
+      }
+
+      // ready(){
+      //   super.ready();
+      //   this._loadAllRegions();
+      // }
+
+      static get is() { return 'reg-app'; }
+      static get properties() {
+        return {
+          user: {
+            type: Object,
+            value : {}
+          }
+        };
+      }
+
+      _loadAllRegions(){
+        this.$.regions.url = config.baseUrl+'/regions';
+        this.$.regions.generateRequest();
+      }
+
+      _onMoveOne(e){
+        //Validate inputs
+        if(this.$.fname.value.length >= 3 &&  !is_alpha_numeric(this.$.fname.value)){
+          console.log('fname good');
+          this._showNormal(this.$.fname);
+
+          this.user.fname = this.$.fname.value;
+        }else{
+          this._showError(this.$.fname);
+          return;
+        }
+
+        if(this.$.lname.value.length >= 3 &&  !is_alpha_numeric(this.$.lname.value)){
+          console.log('lname good');
+          this._showNormal(this.$.lname);
+
+          this.user.lname = this.$.lname.value;
+        }else{
+          this._showError(this.$.lname);
+          return;
+        }
+
+        if(is_email_valid(this.$.email.value)){
+          console.log('email good');
+          this._showNormal(this.$.email);
+
+          this.user.email = this.$.email.value;
+        }else{
+          this._showError(this.$.email);
+          return;
+        }
+
+        if(is_phone_valid(this.$.phone.value)){
+          console.log('phone good');
+          this._showNormal(this.$.phone);
+
+          this.user.phone = this.$.phone.value;
+        }else{
+          this._showError(this.$.phone);
+          return;
+        }
+
+
+        this.$.step1.style = '';
+        this.$.step2.style = 'display:block';
+      }
+
+      _onMoveTwo(e){
+        //Validate inputs
+        if(this.$.m_check.checked){
+          this.user.gender = 'MALE';
+          console.log('Male');
+        }else if(this.$.f_check.checked){
+          this.user.gender = 'FEMALE';
+          console.log('Female');
+        }else{
+          console.log('No Gender');
+          return;
+        }
+
+        if(this.$.dob.value){
+          this.user.dob = this.$.dob.value;
+          console.log(this.$.dob.value);
+        }
+
+        if(this.$.level.value != 'none'){
+          this.user.level = this.$.level.value;
+          this._showNormal(this.$.level);
+          console.log(this.user.level);
+        }else{
+          this._showError(this.$.level);
+          return;
+        }
+
+        if(this.$.m_status.value != 'none'){
+          this.user.m_status = this.$.m_status.value;
+          this._showNormal(this.$.m_status);
+          console.log(this.user.m_status);
+        }else{
+          this._showError(this.$.m_status);
+          return;
+        }
+
+        if(this.$.sick.value != 'none'){
+          this.user.sick = this.$.sick.value;
+          this._showNormal(this.$.sick);
+          console.log(this.$.sick.value);
+        }else{
+          this._showError(this.$.sick);
+          return;
+        }
+
+        if(this.$.id_type.value != 'none'){
+          this.user.id_type = this.$.id_type.value;
+          this._showNormal(this.$.id_type);
+          console.log(this.$.id_type.value);
+        }else{
+          this._showError(this.$.id_type);
+          return;
+        }
+
+        if(this.$.idn.value.length > 6){
+          this.user.idn = this.$.idn.value;
+          this._showNormal(this.$.idn);
+          console.log(this.$.idn.value);
+        }else{
+          this._showError(this.$.idn);
+          return;
+        }
+
+        this.$.step2.style = '';
+        this.$.step3.style = 'display:block;';
+      }
+
+      _onMoveThree(e){
+        this.$.step3.style = '';
+        this.$.step4.style = 'display:block;';
+      }
+
+      _showError(element){
+        if(element){
+          element.style = 'border: 1px solid #c62828'
+        }
+      }
+
+      _showNormal(element){
+        if(element){
+          element.style = 'border: 1px solid #ddd';
+        }
+      }
+
+      _handleRegionResponse(e){
+        console.log(JSON.stringify(e.detail.response));
+        this.set('regions', e.detail.response);
+      }
+
+      _onRegionErrorRequest(e){
+
+      }
+    }
+
+    window.customElements.define(RegApp.is, RegApp);
+  </script>
+</dom-module>

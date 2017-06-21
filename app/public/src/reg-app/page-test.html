@@ -1,0 +1,295 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="reg-app">
+
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .ezwich-style{width: 64px; padding-bottom: 5px;}
+    </style>
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../assets/css/vendor.min.css">
+    <link rel="stylesheet" href="../../assets/css/elephant.min.css">
+    <link rel="stylesheet" href="../../assets/css/application.min.css">
+    <link rel="stylesheet" href="../../assets/css/demo.min.css">
+
+    <div id="page" class="container">
+      <form id="demo-form-wizard-2" data-toggle="validator" novalidate="novalidate">
+          <ul class="steps">
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-1" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Basic Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3 active">
+              <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span class="step-icon icon icon-user"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Personal Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span class="step-icon icon icon-cubes"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Program Information</strong>
+              </div>
+            </li>
+            <li class="step col-xs-3">
+              <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span class="step-icon icon icon-credit-card"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Account Details</strong>
+              </div>
+            </li>
+          </ul>
+          <div class="tab-content">
+
+            <div id="step-1" class="tab-pane active">
+              <h4 class="text-center m-y-md">
+                <span>Basic Information</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label for="fname" class="control-label col-sm-3">First Name</label>
+                    <div class="col-sm-9">
+                      <input id="fname" class="form-control" type="text" name="fname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="mname" class="control-label col-sm-3">Middle Name</label>
+                    <div class="col-sm-9">
+                      <input id="mname" class="form-control" type="text" name="mname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="lname" class="control-label col-sm-3">Last Name</label>
+                    <div class="col-sm-9">
+                      <input id="lname" class="form-control" type="text" name="lname" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email-2" class="control-label col-sm-3">Email address</label>
+                    <div class="col-sm-9">
+                      <input id="email-2" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" >
+                    </div>
+                    
+                  </div>
+
+                  <div class="form-group">
+                    <label for="username-2" class="control-label col-sm-3">Phone Number</label>
+                    <div class="col-sm-9">
+                      <input id="phone" class="form-control" type="text" name="phone" spellcheck="false" autocomplete="off">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="step-2" class="tab-pane">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Gender</label>
+                    <div class="col-sm-9">
+                      <div class="radio col-sm-6">
+                        <label>
+                          <input type="radio" name="gender" value="M"> Male
+                        </label>
+                      </div>
+                      <div class="radio col-sm-6">
+                        <label>
+                          <input type="radio" name="gender" value="F" checked="checked"> Female
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Date of Birth</label>
+                    <div class="col-sm-9">
+                      <input name="dob" type="date" min="2000-01-01" max="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth.">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Marital Status</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Any Form of Disability</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="Single">YES</option>
+                        <option value="Divorced">NO</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-7">Identification Type</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-7" class="form-control custom-select">
+                        <option value="none">- Select -</option>
+                        <option value="VOTERS">Voters</option>
+                        <option value="NHIS">NHIS</option>
+                        <option value="DRIVERS">Drivers Licence</option>
+                        <option value="PASSPORT">Passport</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="idn" class="col-sm-3 control-label">Identification Number</label>
+                    <div class="col-sm-9">
+                    <input id="idn" class="form-control" type="text" name="idn" placeholder="eg. 3435560098">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+
+              </div>
+            </div>
+              
+            </div>
+
+
+           <div id="step-3" class="tab-pane">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Regions</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Districts</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="form-control-6">Programme</label>
+                    <div class="col-sm-9">
+                      <select id="form-control-6" class="form-control custom-select">
+                        <option value="Married">Married</option>
+                        <option value="Single">Single</option>
+                        <option value="Divorced">Divorced</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Next</button>
+                  </div>
+                  
+              </div>
+            </div>
+              
+              
+          </div>
+
+          <div id="step-4" class="tab-pane">
+              <h4 class="text-center m-y-md">
+                <span>Enter your payment details</span>
+              </h4>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-3 control-label">
+                      <img class="ezwich-style" src="../../assets/img/ezwich.png">
+                    </div>
+                    <div class="col-sm-9">
+                      <input id="ezw" class="form-control" type="text" name="ezw" placeholder="Enter Ezwich Number">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="creditcard-number-2" class="control-label col-sm-3">Confirm Card Number</label>
+                    <div class="col-sm-9">
+                      <input id="creditcard-number-2" class="form-control" type="text" name="creditcard_number_2" placeholder="Confirm Ezwich Number">
+                    </div>
+                  </div>
+                 
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-next" type="button">Register</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        <!-- form -->  
+        </form>
+      </div>
+
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class RegApp extends Polymer.Element {
+      connectedCallback(){
+        super.ready();
+      }
+      static get is() { return 'reg-app'; }
+      static get properties() {
+        return {
+          // prop1: {
+          //   type: String,
+          //   value: 'reg-app'
+          // }
+        };
+      }
+    }
+
+    window.customElements.define(RegApp.is, RegApp);
+  </script>
+</dom-module>
