@@ -6,6 +6,8 @@
 
   <template>
      <iron-ajax id='regions' method="GET" handle-as="json" on-response="_handleRegionResponse" debounce-duration="0" on-error="_onRegionErrorRequest"></iron-ajax>
+     <iron-ajax id='districts' method="GET" handle-as="json" on-response="_handleDistrictResponse" debounce-duration="0" on-error="_onDistrictErrorRequest"></iron-ajax>
+     <iron-ajax id='programme' method="GET" handle-as="json" on-response="_handleProgrammeResponse" debounce-duration="0" on-error="_onProgrammeErrorRequest"></iron-ajax>
 
     <style>
       :host {
@@ -26,36 +28,52 @@
     <div id="page" class="container">
       <form id="demo-form-wizard-2" data-toggle="validator" novalidate="novalidate">
           <ul class="steps">
-            <li class="step col-xs-3 active">
+            <li class="step col-xs-2">
               <a class="step-segment" href="#step-1" data-toggle="tab">
-                <span class="step-icon icon icon-user"></span>
+                <span id="step1_wiz" class="step-icon icon icon-user"></span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Basic Information</strong>
               </div>
             </li>
-            <li class="step col-xs-3 active">
+            <li class="step col-xs-2">
               <a class="step-segment" href="#step-2" data-toggle="tab">
-                <span class="step-icon icon icon-user"></span>
+                <span id="step2_wiz" class="step-icon icon icon-user"></span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Personal Information</strong>
               </div>
             </li>
-            <li class="step col-xs-3">
+            <li class="step col-xs-2">
               <a class="step-segment" href="#step-3" data-toggle="tab">
-                <span class="step-icon icon icon-cubes"></span>
+                <span id="step3_wiz" class="step-icon icon icon-cubes"></span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Program Information</strong>
               </div>
             </li>
-            <li class="step col-xs-3">
+            <li class="step col-xs-2">
               <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span class="step-icon icon icon-credit-card"></span>
+                <span id="step4_wiz" class="step-icon icon icon-credit-card"></span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Account Details</strong>
+              </div>
+            </li>
+            <li class="step col-xs-2">
+              <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span id="step5_wiz" class="step-icon icon icon-credit-card"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Review</strong>
+              </div>
+            </li>
+            <li class="step col-xs-2">
+              <a class="step-segment" href="#step-4" data-toggle="tab">
+                <span id="step6_wiz" class="step-icon icon icon-credit-card"></span>
+              </a>
+              <div class="step-content">
+                <strong class="hidden-xs">Receipt</strong>
               </div>
             </li>
           </ul>
@@ -209,9 +227,10 @@
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="form-control-6">Regions</label>
+                    <label class="col-sm-3 control-label" for="region_control">Regions</label>
                     <div class="col-sm-9">
-                      <select id="form-control-6" class="form-control custom-select">
+                      <select id="region_control" class="form-control custom-select" on-change="_onRegionChanged">
+                        <option value="0">- Select Region -</option>
                         <template is="dom-repeat" items="{{regions}}" mutable-data>
                           <option value='{{item.id}}'>{{item.name}}</option>
                         </template>
@@ -220,23 +239,25 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="form-control-6">Districts</label>
+                    <label class="col-sm-3 control-label" for="district_control">Districts</label>
                     <div class="col-sm-9">
-                      <select id="form-control-6" class="form-control custom-select">
-                        <option value="Married">Married</option>
-                        <option value="Single">Single</option>
-                        <option value="Divorced">Divorced</option>
+                      <select id="district_control" class="form-control custom-select">
+                        <option value="0">- Select District -</option>
+                        <template is="dom-repeat" items="{{districts}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}}</option>
+                        </template>
                       </select>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="form-control-6">Programme</label>
+                    <label class="col-sm-3 control-label" for="programme_control">Programme</label>
                     <div class="col-sm-9">
-                      <select id="form-control-6" class="form-control custom-select">
-                        <option value="Married">Married</option>
-                        <option value="Single">Single</option>
-                        <option value="Divorced">Divorced</option>
+                      <select id="programme_control" class="form-control custom-select">
+                        <option value="0">- Select Module -</option>
+                        <template is="dom-repeat" items="{{programmes}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}} - {{item.alias}}</option>
+                        </template>
                       </select>
                     </div>
                   </div>
@@ -253,7 +274,7 @@
 
           <div id="step4" class="tab-pane custom-hide">
               <h4 class="text-center m-y-md">
-                <span>Enter your payment details</span>
+                <span>Enter your account details</span>
               </h4>
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
@@ -267,19 +288,98 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="creditcard-number-2" class="control-label col-sm-3">Confirm Card Number</label>
+                    <label for="ezw2" class="control-label col-sm-3">Confirm Card Number</label>
                     <div class="col-sm-9">
-                      <input id="creditcard-number-2" class="form-control" type="text" name="creditcard_number_2" placeholder="Confirm Ezwich Number">
+                      <input id="ezw2" class="form-control" type="text" name="creditcard_number_2" placeholder="Confirm Ezwich Number">
                     </div>
                   </div>
                  
                   <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onDone">Register</button>
+                    <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFour">Review</button>
                   </div>
                   
                 </div>
               </div>
             </div>
+
+          <div id="step5" class="tab-pane custom-hide">
+
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Name</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.fname}} {{user.lname}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Email</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.email}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Mobile</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.phone}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Date of Birth</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.dob}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">District</label>
+                  <div class="col-sm-9">
+                    <div class="">{{_grabDistrict()}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Module</label>
+                  <div class="col-sm-9">
+                    <div class="">{{_grabModule()}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Identification Type</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.id_type}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Identification Number</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.idn}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">EZWICH</label>
+                  <div class="col-sm-9">
+                    <div class="">{{user.ezwich}}</div>
+                  </div>
+                </div>
+
+               
+
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Register</button>
+                </div>
+                
+            </div>
+          </div>
+            
+            
+        </div>
 
           </div>
 
@@ -299,10 +399,14 @@
     class RegApp extends Polymer.Element {
       connectedCallback(){
         super.ready();
-        this.$.step3.style = 'display:block;';
-                this._loadAllRegions();
 
-        //this.user = {};
+        //this.programmes = [];
+        //this.
+
+        this.$.step1.style = 'display:block;';
+        this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;'
+
+        this._loadAllRegions();
       }
 
       // ready(){
@@ -315,7 +419,8 @@
         return {
           user: {
             type: Object,
-            value : {}
+            value : {},
+            notify: true
           }
         };
       }
@@ -325,10 +430,20 @@
         this.$.regions.generateRequest();
       }
 
+       _loadDistricts(region_id){
+        console.log('Region ::: id => '+region_id);
+        this.$.districts.url = config.baseUrl+'/districts/region/'+region_id;
+        this.$.districts.generateRequest();
+      }
+
+       _loadAllProgrammes(){
+        this.$.programme.url = config.baseUrl+'/programs/';
+        this.$.programme.generateRequest();
+      }
+
       _onMoveOne(e){
         //Validate inputs
         if(this.$.fname.value.length >= 3 &&  !is_alpha_numeric(this.$.fname.value)){
-          console.log('fname good');
           this._showNormal(this.$.fname);
 
           this.user.fname = this.$.fname.value;
@@ -338,7 +453,6 @@
         }
 
         if(this.$.lname.value.length >= 3 &&  !is_alpha_numeric(this.$.lname.value)){
-          console.log('lname good');
           this._showNormal(this.$.lname);
 
           this.user.lname = this.$.lname.value;
@@ -348,7 +462,6 @@
         }
 
         if(is_email_valid(this.$.email.value)){
-          console.log('email good');
           this._showNormal(this.$.email);
 
           this.user.email = this.$.email.value;
@@ -358,7 +471,6 @@
         }
 
         if(is_phone_valid(this.$.phone.value)){
-          console.log('phone good');
           this._showNormal(this.$.phone);
 
           this.user.phone = this.$.phone.value;
@@ -367,21 +479,20 @@
           return;
         }
 
-
         this.$.step1.style = '';
+        this.$.step1_wiz.style = ''
+
         this.$.step2.style = 'display:block';
+        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onMoveTwo(e){
         //Validate inputs
         if(this.$.m_check.checked){
           this.user.gender = 'MALE';
-          console.log('Male');
         }else if(this.$.f_check.checked){
           this.user.gender = 'FEMALE';
-          console.log('Female');
         }else{
-          console.log('No Gender');
           return;
         }
 
@@ -436,12 +547,60 @@
         }
 
         this.$.step2.style = '';
+        this.$.step2_wiz.style = '';
+
         this.$.step3.style = 'display:block;';
+        this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onMoveThree(e){
+        if(parseInt(this.$.region_control.value) > 0){
+          this.user.region_id = this.$.region_control.value;
+          this._showNormal(this.$.region_control);
+        }else{
+          this._showError(this.$.region_control);
+          return;
+        }
+
+        if(parseInt(this.$.district_control.value) > 0){
+          this.user.district_id = this.$.district_control.value;
+          this._showNormal(this.$.district_control);
+        }else{
+          this._showError(this.$.district_control);
+          return;
+        }
+
+        if(parseInt(this.$.programme_control.value) > 0){
+          this.user.programme = this.$.programme_control.value;
+          this._showNormal(this.$.programme_control);
+        }else{
+          this._showError(this.$.programme_control);
+          return;
+        }
+
         this.$.step3.style = '';
+        this.$.step3_wiz.style = '';
+
         this.$.step4.style = 'display:block;';
+        this.$.step4_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+
+      }
+
+      _onMoveFour(){
+        if(this.$.ezw.value === this.$.ezw2.value){
+          this.user.ezwich = this.$.ezw.value;
+          this._showNormal(this.$.ezw);
+          this._showNormal(this.$.ezw2);
+        }else{
+          this._showError(this.$.ezw);
+          this._showError(this.$.ezw2);
+        }
+
+        this.$.step4.style = '';
+        this.$.step4_wiz.style = '';
+
+        this.$.step5.style = 'display:block;';
+        this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _showError(element){
@@ -463,6 +622,37 @@
 
       _onRegionErrorRequest(e){
 
+      }
+
+      _handleDistrictResponse(e){
+        console.log(JSON.stringify(e.detail.response));
+        this.set('districts', e.detail.response);
+
+        this._loadAllProgrammes();
+      }
+
+      _onDistrictErrorRequest(e){
+
+      }
+
+      _handleProgrammeResponse(e){
+        console.log(JSON.stringify(e.detail.response));
+        this.set('programmes', e.detail.response);
+      }
+
+      _onProgrammeErrorRequest(e){
+
+      }
+
+      _onRegionChanged(e){
+        this._loadDistricts(this.$.region_control.value);
+      }
+
+      _grabModule(){
+        //return _.find(this.programmes, function(item){return item.id == this.user.programme}).name;
+      }
+      _grabDistrict(){
+        //return _.find(this.districts, function(item){return item.id == this.user.district_id}).name;
       }
     }
 

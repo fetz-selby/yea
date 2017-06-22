@@ -5,6 +5,9 @@ var program = function(sequelize){
 	  name: {
 	    type: Sequelize.STRING
 	  },
+	  alias: {
+	    type: Sequelize.STRING
+	  },
 	  status: {
 	    type: Sequelize.STRING(1)
 	  }

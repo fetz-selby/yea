@@ -1,0 +1,10 @@
+[{name: 'Western Region',status: 'A'},
+      {name : 'Central Region', status: 'A'},
+      {name: 'Greater Accra Region', status: 'A'},
+      {name: 'Volta Region', status: 'A'},
+      {name: 'Eastern Region', status: 'A'},
+      {name: 'Ashanti Region', status: 'A'},
+      {name: 'Brong-Ahafo Region', status: 'A'},
+      {name: 'Northern Region', status: 'A'},
+      {name: 'Upper East', status: 'A'},
+      {name: 'Upper West', status: 'A'}]

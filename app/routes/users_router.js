@@ -14,14 +14,14 @@ var routes = function(User){
 
     usersRouter.route('/:id')
         .get(function(req, res){
-            User.findById(req.param.id).then(user => {
+            User.findById(req.params.id).then(user => {
                 res.status(200).json(user);
             })
         }); 
 
     usersRouter.route('/email/:email')
         .get(function(req, res){
-           User.findOne({ where : {email : req.param.email}}).then(user => {
+           User.findOne({ where : {email : req.params.email}}).then(user => {
             res.status(200).json(user);
            })
         }); 

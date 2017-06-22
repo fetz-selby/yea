@@ -14,7 +14,7 @@ var routes = function(Program){
 
     programRouter.route('/:id')
         .get(function(req, res){  
-            Program.findById(req.param.id).then(program => {
+            Program.findById(req.params.id).then(program => {
                 res.status(200).json(program);
             })
         }); 

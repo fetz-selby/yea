@@ -47,6 +47,9 @@ var member = function(sequelize){
 	  id_number: {
 	    type: Sequelize.STRING
 	  },
+	  ezwich: {
+	    type: Sequelize.STRING
+	  },
 	  status: {
 	    type: Sequelize.STRING(1)
 	  }

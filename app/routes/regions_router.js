@@ -18,7 +18,7 @@ var routes = function(Region){
 
     regionsRouter.route('/:id')
                 .get(function(req, res){ 
-                  Region.findById(req.param.id).then(region => {
+                  Region.findById(req.params.id).then(region => {
                     res.status(200).json(region);
                   });
 

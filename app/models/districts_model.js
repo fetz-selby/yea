@@ -6,6 +6,15 @@ var districts = function(sequelize){
 	  name: {
 	    type: Sequelize.STRING
 	  },
+	  map_id: {
+	    type: Sequelize.STRING
+	  },
+	  d_length: {
+	    type: Sequelize.DOUBLE
+	  },
+	  point: {
+	    type: Sequelize.DOUBLE
+	  },
 	  status: {
 	    type: Sequelize.STRING(1)
 	  }
