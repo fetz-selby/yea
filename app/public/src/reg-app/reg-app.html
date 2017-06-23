@@ -8,6 +8,12 @@
      <iron-ajax id='regions' method="GET" handle-as="json" on-response="_handleRegionResponse" debounce-duration="0" on-error="_onRegionErrorRequest"></iron-ajax>
      <iron-ajax id='districts' method="GET" handle-as="json" on-response="_handleDistrictResponse" debounce-duration="0" on-error="_onDistrictErrorRequest"></iron-ajax>
      <iron-ajax id='programme' method="GET" handle-as="json" on-response="_handleProgrammeResponse" debounce-duration="0" on-error="_onProgrammeErrorRequest"></iron-ajax>
+     <iron-ajax id='register' method="POST" handle-as="json" content-type="application/json" on-response="_handleRegisterResponse" debounce-duration="0" on-error="_onRegisterErrorRequest"></iron-ajax>
+
+     <iron-ajax id='validateEmail' method="GET" handle-as="json" on-response="_handleValidateEmailResponse" debounce-duration="0" on-error="_onValidateEmailErrorRequest"></iron-ajax>
+     <iron-ajax id='validatePhone' method="GET" handle-as="json" on-response="_handleValidePhoneResponse" debounce-duration="0" on-error="_onValidatePhoneErrorRequest"></iron-ajax>
+     <iron-ajax id='validateId' method="GET" handle-as="json" on-response="_handleValideIdResponse" debounce-duration="0" on-error="_onIdErrorRequest"></iron-ajax>
+     <iron-ajax id='validateEzwich' method="GET" handle-as="json" on-response="_handleValideEzwichResponse" debounce-duration="0" on-error="_onEzwichErrorRequest"></iron-ajax>
 
     <style>
       :host {
@@ -16,6 +22,7 @@
 
       .ezwich-style{width: 64px; padding-bottom: 5px;}
       .custom-hide{display: none;}
+      .review{font-size: 15px;color: #b71c1c;font-weight: 600;}
     </style>
     <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -30,7 +37,7 @@
           <ul class="steps">
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-1" data-toggle="tab">
-                <span id="step1_wiz" class="step-icon icon icon-user"></span>
+                <span id="step1_wiz" class="step-icon">1</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Basic Information</strong>
@@ -38,7 +45,7 @@
             </li>
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-2" data-toggle="tab">
-                <span id="step2_wiz" class="step-icon icon icon-user"></span>
+                <span id="step2_wiz" class="step-icon">2</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Personal Information</strong>
@@ -46,7 +53,7 @@
             </li>
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-3" data-toggle="tab">
-                <span id="step3_wiz" class="step-icon icon icon-cubes"></span>
+                <span id="step3_wiz" class="step-icon">3</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Program Information</strong>
@@ -54,7 +61,7 @@
             </li>
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step4_wiz" class="step-icon icon icon-credit-card"></span>
+                <span id="step4_wiz" class="step-icon">4</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Account Details</strong>
@@ -62,7 +69,7 @@
             </li>
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step5_wiz" class="step-icon icon icon-credit-card"></span>
+                <span id="step5_wiz" class="step-icon">5</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Review</strong>
@@ -70,7 +77,7 @@
             </li>
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step6_wiz" class="step-icon icon icon-credit-card"></span>
+                <span id="step6_wiz" class="step-icon">6</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Receipt</strong>
@@ -186,8 +193,8 @@
                     <div class="col-sm-9">
                       <select id="sick" class="form-control custom-select">
                         <option value="none">- Select -</option>
-                        <option value="Single">YES</option>
-                        <option value="Divorced">NO</option>
+                        <option value="Y">YES</option>
+                        <option value="N">NO</option>
                       </select>
                     </div>
                   </div>
@@ -309,67 +316,103 @@
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Name</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.fname}} {{user.lname}}</div>
+                    <div class="review">{{user.fname}} {{user.lname}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Email</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.email}}</div>
+                    <div class="review">{{user.email}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Mobile</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.phone}}</div>
+                    <div class="review">{{user.msisdn}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Date of Birth</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.dob}}</div>
+                    <div class="review">{{user.dob}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">District</label>
                   <div class="col-sm-9">
-                    <div class="">{{_grabDistrict()}}</div>
+                    <div class="review">{{user.district}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Module</label>
                   <div class="col-sm-9">
-                    <div class="">{{_grabModule()}}</div>
+                    <div class="review">{{user.module}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Identification Type</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.id_type}}</div>
+                    <div class="review">{{user.id_type}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">Identification Number</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.idn}}</div>
+                    <div class="review">{{user.id_number}}</div>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-sm-3 control-label" for="region_control">EZWICH</label>
                   <div class="col-sm-9">
-                    <div class="">{{user.ezwich}}</div>
+                    <div class="review">{{user.ezwich}}</div>
                   </div>
                 </div>
 
-               
+
+                <div class="form-group">
+                  <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegister">Register</button>
+                </div>
+                
+            </div>
+          </div>
+            
+            
+        </div>
+
+
+         <div id="step6" class="tab-pane custom-hide">
+
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Name</label>
+                  <div class="col-sm-9">
+                    <div class="review">{{user.fname}} {{user.lname}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">Email</label>
+                  <div class="col-sm-9">
+                    <div class="review">{{user.email}}</div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-sm-3 control-label" for="region_control">EZWICH</label>
+                  <div class="col-sm-9">
+                    <div class="review">{{user.ezwich}}</div>
+                  </div>
+                </div>
+
 
                 <div class="form-group">
                   <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Register</button>
@@ -380,6 +423,7 @@
             
             
         </div>
+
 
           </div>
 
@@ -431,7 +475,6 @@
       }
 
        _loadDistricts(region_id){
-        console.log('Region ::: id => '+region_id);
         this.$.districts.url = config.baseUrl+'/districts/region/'+region_id;
         this.$.districts.generateRequest();
       }
@@ -441,12 +484,39 @@
         this.$.programme.generateRequest();
       }
 
+      _saveDetails(){
+        this.$.register.url = config.baseUrl+'/register/';
+        this.$.register.body = this.user;
+        this.$.register.generateRequest();
+      }
+
+      _validatePhone(){
+        this.$.validatePhone.url = config.baseUrl+'/members/msisdn/'+this.user.msisdn;
+        this.$.validatePhone.generateRequest();
+      }
+
+      _validateEmail(){
+        this.$.validateEmail.url = config.baseUrl+'/members/email/'+this.user.email;
+        this.$.validateEmail.generateRequest();
+      }
+
+      _validateID(){
+        this.$.validateId.url = config.baseUrl+'/members/idn/'+this.user.id_number;
+        this.$.validateId.generateRequest();
+      }
+
+      _validateEzwich(){
+        this.$.validateEzwich.url = config.baseUrl+'/members/ezwich/'+this.user.ezwich;
+        this.$.validateEzwich.generateRequest();
+      }
+
       _onMoveOne(e){
         //Validate inputs
         if(this.$.fname.value.length >= 3 &&  !is_alpha_numeric(this.$.fname.value)){
           this._showNormal(this.$.fname);
 
           this.user.fname = this.$.fname.value;
+          this.notifyPath('user.fname');
         }else{
           this._showError(this.$.fname);
           return;
@@ -456,6 +526,8 @@
           this._showNormal(this.$.lname);
 
           this.user.lname = this.$.lname.value;
+          this.notifyPath('user.lname');
+
         }else{
           this._showError(this.$.lname);
           return;
@@ -465,6 +537,8 @@
           this._showNormal(this.$.email);
 
           this.user.email = this.$.email.value;
+          this.notifyPath('user.email');
+
         }else{
           this._showError(this.$.email);
           return;
@@ -473,17 +547,23 @@
         if(is_phone_valid(this.$.phone.value)){
           this._showNormal(this.$.phone);
 
-          this.user.phone = this.$.phone.value;
+          this.user.msisdn = this.$.phone.value;
+          this.notifyPath('user.msisdn');
+
         }else{
           this._showError(this.$.phone);
           return;
         }
 
-        this.$.step1.style = '';
-        this.$.step1_wiz.style = ''
+        //Validate email and phone
 
-        this.$.step2.style = 'display:block';
-        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        this._validateEmail();
+
+        // this.$.step1.style = '';
+        // this.$.step1_wiz.style = ''
+
+        // this.$.step2.style = 'display:block';
+        // this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onMoveTwo(e){
@@ -496,15 +576,20 @@
           return;
         }
 
+        this.notifyPath('user.gender');
+
+
         if(this.$.dob.value){
           this.user.dob = this.$.dob.value;
           console.log(this.$.dob.value);
+          this.notifyPath('user.dob');
         }
 
         if(this.$.level.value != 'none'){
-          this.user.level = this.$.level.value;
+          this.user.literacy_level = this.$.level.value;
           this._showNormal(this.$.level);
-          console.log(this.user.level);
+          console.log(this.user.literacy_level);
+          this.notifyPath('user.literacy_level');
         }else{
           this._showError(this.$.level);
           return;
@@ -514,15 +599,18 @@
           this.user.m_status = this.$.m_status.value;
           this._showNormal(this.$.m_status);
           console.log(this.user.m_status);
+
+          this.notifyPath('user.m_status');
         }else{
           this._showError(this.$.m_status);
           return;
         }
 
         if(this.$.sick.value != 'none'){
-          this.user.sick = this.$.sick.value;
+          this.user.is_disabled = this.$.sick.value;
           this._showNormal(this.$.sick);
           console.log(this.$.sick.value);
+          this.notifyPath('user.is_disabled');
         }else{
           this._showError(this.$.sick);
           return;
@@ -532,28 +620,33 @@
           this.user.id_type = this.$.id_type.value;
           this._showNormal(this.$.id_type);
           console.log(this.$.id_type.value);
+          this.notifyPath('user.id_type');
         }else{
           this._showError(this.$.id_type);
           return;
         }
 
         if(this.$.idn.value.length > 6){
-          this.user.idn = this.$.idn.value;
+          this.user.id_number = this.$.idn.value;
           this._showNormal(this.$.idn);
           console.log(this.$.idn.value);
+          this.notifyPath('user.id_number');
         }else{
           this._showError(this.$.idn);
           return;
         }
 
-        this.$.step2.style = '';
-        this.$.step2_wiz.style = '';
+        this._validateID();
 
-        this.$.step3.style = 'display:block;';
-        this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        // this.$.step2.style = '';
+        // this.$.step2_wiz.style = '';
+
+        // this.$.step3.style = 'display:block;';
+        // this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onMoveThree(e){
+        var app = this;
         if(parseInt(this.$.region_control.value) > 0){
           this.user.region_id = this.$.region_control.value;
           this._showNormal(this.$.region_control);
@@ -565,14 +658,20 @@
         if(parseInt(this.$.district_control.value) > 0){
           this.user.district_id = this.$.district_control.value;
           this._showNormal(this.$.district_control);
+
+          this.user.district = _.find(this.districts, function(item){return item.id == app.user.district_id}).name;
+          this.notifyPath('user.district');
         }else{
           this._showError(this.$.district_control);
           return;
         }
 
         if(parseInt(this.$.programme_control.value) > 0){
-          this.user.programme = this.$.programme_control.value;
+          this.user.program_id = this.$.programme_control.value;
           this._showNormal(this.$.programme_control);
+
+          this.user.module = _.find(this.programmes, function(item){return item.id == app.user.program_id}).name;
+          this.notifyPath('user.module');
         }else{
           this._showError(this.$.programme_control);
           return;
@@ -591,16 +690,20 @@
           this.user.ezwich = this.$.ezw.value;
           this._showNormal(this.$.ezw);
           this._showNormal(this.$.ezw2);
+
+          this.notifyPath('user.ezwich');
         }else{
           this._showError(this.$.ezw);
           this._showError(this.$.ezw2);
         }
 
-        this.$.step4.style = '';
-        this.$.step4_wiz.style = '';
+        this._validateEzwich();
 
-        this.$.step5.style = 'display:block;';
-        this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        // this.$.step4.style = '';
+        // this.$.step4_wiz.style = '';
+
+        // this.$.step5.style = 'display:block;';
+        // this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _showError(element){
@@ -644,15 +747,78 @@
 
       }
 
+      _handleRegisterResponse(e){
+
+      }
+
+      _onRegister(e){
+        this._saveDetails();
+      }
+
       _onRegionChanged(e){
         this._loadDistricts(this.$.region_control.value);
       }
 
-      _grabModule(){
-        //return _.find(this.programmes, function(item){return item.id == this.user.programme}).name;
+      _handleValidateEmailResponse(e){
+        if(e.detail.response){
+          console.log('Came with response');
+          this._showError(this.$.email);
+          return; 
+        }else{
+          this._showNormal(this.$.email);
+          this._validatePhone();
+        }
       }
-      _grabDistrict(){
-        //return _.find(this.districts, function(item){return item.id == this.user.district_id}).name;
+
+      _handleValidePhoneResponse(e){
+        if(e.detail.response){
+          console.log('Came with response');
+          this._showError(this.$.phone);
+          return;
+        }else{
+          this._showNormal(this.$.phone);
+
+          this.$.step1.style = '';
+          this.$.step1_wiz.style = ''
+
+          this.$.step2.style = 'display:block';
+          this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+
+        }
+      }
+
+      _handleValideIdResponse(e){
+        if(e.detail.response){
+          this._showError(this.$.idn);
+          return;
+        }else{
+          this._showNormal(this.$.idn);
+
+          this.$.step2.style = '';
+          this.$.step2_wiz.style = '';
+
+          this.$.step3.style = 'display:block;';
+          this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+
+        }
+      }
+
+      _handleValideEzwichResponse(e){
+        if(e.detail.response){
+          this._showError(this.$.ezw);
+          this._showError(this.$.ezw2);
+          return;
+        }else{
+          this._showNormal(this.$.ezw);
+          this._showNormal(this.$.ezw2);
+
+          this.$.step4.style = '';
+          this.$.step4_wiz.style = '';
+
+          this.$.step5.style = 'display:block;';
+          this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+
+        }
       }
     }
 

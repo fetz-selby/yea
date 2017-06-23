@@ -15,6 +15,26 @@ var routes = function(Member){
 
                 });  
 
+    memberRouter.route('/email/:email')
+    .get(function(req, res){
+        var email = req.params.email;
+
+        Member.findOne({ where : {email: email} }).then(member =>{
+            res.status(200).json(member);
+        })
+
+    });  
+
+    memberRouter.route('/msisdn/:msisdn')
+    .get(function(req, res){
+        var msisdn = req.params.msisdn;
+
+        Member.findOne({ where : {msisdn : msisdn}  }).then(member =>{
+            res.status(200).json(member);
+        })
+
+    });  
+
 
     memberRouter.route('/')
                 .post(function(req, res){

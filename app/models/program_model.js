@@ -9,7 +9,7 @@ var program = function(sequelize){
 	    type: Sequelize.STRING
 	  },
 	  status: {
-	    type: Sequelize.STRING(1)
+	    type: Sequelize.STRING(1),
 	  }
 	});
 
