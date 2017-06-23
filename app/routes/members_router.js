@@ -35,6 +35,26 @@ var routes = function(Member){
 
     });  
 
+    memberRouter.route('/idn/:idn')
+    .get(function(req, res){
+        var idn = req.params.idn;
+
+        Member.findOne({ where : {id_number : idn}  }).then(member =>{
+            res.status(200).json(member);
+        })
+
+    }); 
+
+    memberRouter.route('/ezwich/:ezwich')
+    .get(function(req, res){
+        var ezwich = req.params.ezwich;
+
+        Member.findOne({ where : {ezwich : ezwich}  }).then(member =>{
+            res.status(200).json(member);
+        })
+
+    }); 
+
 
     memberRouter.route('/')
                 .post(function(req, res){

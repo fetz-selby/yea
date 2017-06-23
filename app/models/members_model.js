@@ -32,7 +32,7 @@ var member = function(sequelize){
 	  },
 	  m_status: {
 		type:   Sequelize.ENUM,
-    	values: ['SINGLE', 'MARRIED', 'DIVORCE']	  
+    	values: ['SINGLE', 'MARRIED', 'DIVORCED']	  
       },
 	  is_disabled: {
 	    type: Sequelize.STRING(1),
