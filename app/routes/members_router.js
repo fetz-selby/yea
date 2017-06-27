@@ -8,12 +8,12 @@ var routes = function(Member){
 
 
     memberRouter.route('/')
-                .get(function(req, res){
-                    Member.findAll().then(members =>{
-                        res.status(200).json(members);
-                    })
+    .get(function(req, res){
+        Member.findAll().then(members =>{
+            res.status(200).json(members);
+        })
 
-                });  
+    });  
 
     memberRouter.route('/email/:email')
     .get(function(req, res){

@@ -6,9 +6,9 @@ var routes = function(Member){
     var registerRouter = express.Router(),
         EventEmitter = new event();
 
-
     registerRouter.route('/')
         .post(function(req, res){
+            req.body.status = 'A';
             Member.create(req.body).then(member => {
                 res.status(200).json(generateYEAID(member));
             });        

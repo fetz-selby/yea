@@ -12,6 +12,24 @@ var member = function(sequelize){
 	  mname: {
 	  	type: Sequelize.STRING
 	  },
+	  town: {
+	  	type: Sequelize.STRING
+	  },
+	  personal_district_id: {
+	  	type : Sequelize.INTEGER
+	  },
+	  personal_region_id: {
+	  	type : Sequelize.INTEGER
+	  },
+	  kin_name :{
+	  	type : Sequelize.STRING
+	  },
+	  kin_msisdn :{
+	  	type : Sequelize.STRING
+	  },
+	  spouse : {
+	  	type : Sequelize.STRING
+	  },
 	  email: {
 		type: Sequelize.STRING,
 	    unique : true,
@@ -28,7 +46,6 @@ var member = function(sequelize){
 	  },
 	  msisdn: {
 	    type: Sequelize.STRING,
-	    unique : true
 	  },
 	  m_status: {
 		type:   Sequelize.ENUM,

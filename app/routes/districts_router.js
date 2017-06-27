@@ -9,7 +9,7 @@ var routes = function(District){
     districtsRouter.route('/')
                 .get(function(req, res){
                               
-                  District.findAll().then(districts => {
+                  District.findAll({where : {status : 'A'}}).then(districts => {
                     res.status(200).json(districts);
                   })
 

@@ -23,6 +23,7 @@
       .ezwich-style{width: 64px; padding-bottom: 5px;}
       .custom-hide{display: none;}
       .review{font-size: 15px;color: #b71c1c;font-weight: 600;}
+      .info-container-style{background: #ffcdd2;padding-bottom: 10% !important;padding-top: 10% !important;}    
     </style>
     <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -32,8 +33,43 @@
     <link rel="stylesheet" href="../../assets/css/application.min.css">
     <link rel="stylesheet" href="../../assets/css/demo.min.css">
 
+    <link href="/../../assets/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css" rel="stylesheet">
+
     <div id="page" class="container">
-      <form id="demo-form-wizard-2" data-toggle="validator" novalidate="novalidate">
+
+      <div id="info_page" class="row info-container-style">
+        <div class="col-sm-6 col-sm-offset-3">
+          <div class="row">
+            <br/>
+            <div class="col-sm-6 col-sm-offset-3">
+              <img src="../../assets/img/yea.png">
+            </div>
+
+            <br/>
+            <br/>
+            <br/>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-9 col-sm-offset-1">
+              <i class="fa fa-info-circle fa-2x text-center" aria-hidden="true"></i>
+              <br/>
+              <p>1. Make sure you provide accurate and true information about yourself.</p>
+              <p>2. Submitting two(2) applications automatically disqualifies you. </p>
+              <p>3. You WILL need a national identification card(VOTERS, DRIVERS LICENSE, NHIS, NATIONAL ID OR PASSPORT)</p>
+              <p>4. Valid EZWICH account</p>
+              <br/>
+            </div>
+          </div>
+
+          <div class="row">
+            <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onAgree">I Agree</button>
+          </div>
+        </div>
+
+      </div>
+
+      <form id="form_wizard" data-toggle="validator" novalidate="novalidate" style="display:none;">
           <ul class="steps">
             <li class="step col-xs-2">
               <a class="step-segment" href="#step-1" data-toggle="tab">
@@ -56,7 +92,7 @@
                 <span id="step3_wiz" class="step-icon">3</span>
               </a>
               <div class="step-content">
-                <strong class="hidden-xs">Program Information</strong>
+                <strong class="hidden-xs">Work Preference</strong>
               </div>
             </li>
             <li class="step col-xs-2">
@@ -84,7 +120,7 @@
               </div>
             </li>
           </ul>
-          <div class="tab-content">
+          <div class="tab-content" style="margin-top: 15px !important;">
 
             <div id="step1" class="tab-pane custom-hide">
               <h4 class="text-center m-y-md">
@@ -92,6 +128,19 @@
               </h4>
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="programme_control">Programme</label>
+                    <div class="col-sm-9">
+                      <select id="programme_control" class="form-control custom-select">
+                        <option value="0">- Select Module -</option>
+                        <template is="dom-repeat" items="{{programmes}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}} - {{item.alias}}</option>
+                        </template>
+                      </select>
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="fname" class="control-label col-sm-3">First Name</label>
                     <div class="col-sm-9">
@@ -114,15 +163,45 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="email" class="control-label col-sm-3">Email address</label>
+                    <label class="col-sm-3 control-label" for="region_control">Regions</label>
                     <div class="col-sm-9">
-                      <input id="email" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" >
+                      <select id="region_control" class="form-control custom-select" on-change="_onRegionChanged">
+                        <option value="0">- Select Region -</option>
+                        <template is="dom-repeat" items="{{regions}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}}</option>
+                        </template>
+                      </select>
                     </div>
-                    
                   </div>
 
                   <div class="form-group">
-                    <label for="phone" class="control-label col-sm-3">Phone Number</label>
+                    <label class="col-sm-3 control-label" for="district_control">Districts</label>
+                    <div class="col-sm-9">
+                      <select id="district_control" class="form-control custom-select">
+                        <option value="0">- Select District -</option>
+                        <template is="dom-repeat" items="{{districts}}" mutable-data>
+                          <option value='{{item.id}}'>{{item.name}}</option>
+                        </template>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="town" class="control-label col-sm-3">Town</label>
+                    <div class="col-sm-9">
+                      <input id="town" class="form-control" type="text" name="town" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="email" class="control-label col-sm-3">Email</label>
+                    <div class="col-sm-9">
+                      <input id="email" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="phone" class="control-label col-sm-3">Phone</label>
                     <div class="col-sm-9">
                       <input id="phone" class="form-control" type="text" name="phone" spellcheck="false" autocomplete="off">
                     </div>
@@ -147,7 +226,7 @@
                           <input id="m_check" type="radio" name="gender" value="M"> Male
                         </label>
                       </div>
-                      <div class="radio col-sm-6">
+                      <div class="radio col-sm-6" style="margin-top: 10px !important; margin-bottom: 0 !important;">
                         <label>
                           <input id="f_check" type="radio" name="gender" value="F"> Female
                         </label>
@@ -158,7 +237,7 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="dob">Date of Birth</label>
                     <div class="col-sm-9">
-                      <input id="dob" name="dob" type="date" min="2000-01-01" max="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth">
+                      <input id="dob" name="dob" type="date" max="2000-01-01" min="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth">
                     </div>
                   </div>
 
@@ -179,12 +258,34 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="m_status">Marital Status</label>
                     <div class="col-sm-9">
-                      <select id="m_status" class="form-control custom-select">
+                      <select id="m_status" class="form-control custom-select" on-change="_onMaritalStatusChanged">
                         <option value="none">- Select -</option>
                         <option value="Married">Married</option>
                         <option value="Single">Single</option>
                         <option value="Divorced">Divorced</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div id="spouse_control" class="form-group" style="display:none;">
+                    <label for="spouse" class="col-sm-3 control-label">Spouse Name</label>
+                    <div class="col-sm-9">
+                    <input id="spouse" class="form-control" type="text" name="spouse">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="kin_name" class="col-sm-3 control-label">Next of Kin</label>
+                    <div class="col-sm-9">
+                    <input id="kin_name" class="form-control" type="text" name="kin_name">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="kin_msisdn" class="col-sm-3 control-label">Phone Number of Kin</label>
+                    <div class="col-sm-9">
+                    <input id="kin_msisdn" class="form-control" type="text" name="kin_msisdn">
                     </div>
                   </div>
 
@@ -219,8 +320,14 @@
                     </div>
                   </div>
 
+                  <br/>
                   <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwo">Next</button>
+                    <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwoBack">Back</button>
+                    </div>
+                    <div class="col-sm-6">  
+                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwo">Next</button>
+                    </div>
                   </div>
 
               </div>
@@ -233,10 +340,18 @@
 
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="region_control">Regions</label>
+
+                   <div class="form-group">
+                    <label class="col-sm-3 control-label" for="region_control_2">Module</label>
                     <div class="col-sm-9">
-                      <select id="region_control" class="form-control custom-select" on-change="_onRegionChanged">
+                    <label>{{user.module}}</label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label" for="region_control_2">Regions</label>
+                    <div class="col-sm-9">
+                      <select id="region_control_2" class="form-control custom-select" on-change="_onRegionChanged">
                         <option value="0">- Select Region -</option>
                         <template is="dom-repeat" items="{{regions}}" mutable-data>
                           <option value='{{item.id}}'>{{item.name}}</option>
@@ -246,9 +361,9 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="district_control">Districts</label>
+                    <label class="col-sm-3 control-label" for="district_control_2">Districts</label>
                     <div class="col-sm-9">
-                      <select id="district_control" class="form-control custom-select">
+                      <select id="district_control_2" class="form-control custom-select">
                         <option value="0">- Select District -</option>
                         <template is="dom-repeat" items="{{districts}}" mutable-data>
                           <option value='{{item.id}}'>{{item.name}}</option>
@@ -257,20 +372,14 @@
                     </div>
                   </div>
 
+                  <br/>
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="programme_control">Programme</label>
-                    <div class="col-sm-9">
-                      <select id="programme_control" class="form-control custom-select">
-                        <option value="0">- Select Module -</option>
-                        <template is="dom-repeat" items="{{programmes}}" mutable-data>
-                          <option value='{{item.id}}'>{{item.name}} - {{item.alias}}</option>
-                        </template>
-                      </select>
+                    <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThreeBack">Back</button>
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Next</button>
+                    <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Next</button>
+                    </div>
                   </div>
                   
               </div>
@@ -301,8 +410,14 @@
                     </div>
                   </div>
                  
+                  <br/>
                   <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFour">Review</button>
+                    <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFourBack">Back</button>
+                    </div>
+                    <div class="col-sm-6">
+                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveFour">Review</button>
+                    </div>
                   </div>
                   
                 </div>
@@ -312,73 +427,62 @@
           <div id="step5" class="tab-pane custom-hide">
 
             <div class="row">
+             
               <div class="col-sm-8 col-sm-offset-2">
+
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Name</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.fname}} {{user.lname}}</div>
-                  </div>
+                    <label class="control-label" for="review_name">Name</label>
+                    <div id="review_name" name="review_name" class="review">{{user.fname}} {{user.lname}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Email</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.email}}</div>
-                  </div>
+                    <label class="control-label">Date of Birth</label>
+                    <div id="review_dob" name="review_dob" class="review">{{user.dob}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Mobile</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.msisdn}}</div>
-                  </div>
+                    <label class="control-label">District</label>
+                    <div id="review_district" name="review_district" class="review">{{user.district}}</div>
+                </div>
+
+                 <div class="form-group">
+                    <label class="control-label">Town</label>
+                    <div id="review_town" name="review_town" class="review">{{user.town}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Date of Birth</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.dob}}</div>
-                  </div>
+                    <label class="control-label">Pref. Work District</label>
+                    <div id="review_district" name="review_pref_district" class="review">{{user.district}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">District</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.district}}</div>
-                  </div>
+                    <label class="control-label">Module</label>
+                    <div id="review_module" name="review_module" class="review">{{user.module}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Module</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.module}}</div>
-                  </div>
+                    <label class="control-label">Identification Type</label>
+                    <div id="review_type" name="review_type" class="review">{{user.id_type}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Identification Type</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.id_type}}</div>
-                  </div>
+                    <label class="control-label">Identification Number</label>
+                    <div id="review_idn" name="review_idn" class="review">{{user.id_number}}</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">Identification Number</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.id_number}}</div>
-                  </div>
+                    <label class="ontrol-label">EZWICH</label>
+                    <div id="review_ezwich" class="review">{{user.ezwich}}</div>
                 </div>
 
+                <br/>
                 <div class="form-group">
-                  <label class="col-sm-3 control-label" for="region_control">EZWICH</label>
-                  <div class="col-sm-9">
-                    <div class="review">{{user.ezwich}}</div>
+                  <div class="col-sm-6">
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegisterBack">Back</button>
                   </div>
-                </div>
-
-
-                <div class="form-group">
-                  <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegister">Register</button>
+                  <div class="col-sm-6">
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegister">Register</button>
+                  </div>
                 </div>
                 
             </div>
@@ -391,20 +495,77 @@
          <div id="step6" class="tab-pane custom-hide">
 
             <div class="row">
-              <div class="col-sm-8 col-sm-offset-2">
+
+               <div class="col-sm-3">
+                  <img src="../../assets/img/yea.png">
+              </div>
+
+
+              <div class="col-sm-9">
+
                 <div class="form-group">
-                  <label class="col-sm-12 control-label" for="region_control">Congratulations {{user.fname}} ....</label> 
+                  <div class="col-sm-12 control-label" for="region_control" style="font-size: 25px; padding: 0 !important;">Congratulations {{user.fname}} ....</div>
                 </div>
 
                 <div class="form-group">
-                  <label class="col-sm-12 control-label" for="region_control" style="font-size: 25px;">{{user.yea_id}}</label>
+                    <label class="control-label">Name</label>
+                    <div id="review_name" name="review_name" class="review">{{user.fname}} {{user.lname}}</div>
                 </div>
-                
-            </div>
+
+                <div class="form-group">
+                    <label class="control-label">Date of Birth</label>
+                    <div id="review_dob" name="review_dob" class="review">{{user.dob}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">District</label>
+                    <div id="review_district" name="review_district" class="review">{{user.personal_district}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Town</label>
+                    <div id="review_town" name="review_town" class="review">{{user.town}}</div>
+                </div>
+
+                 <div class="form-group">
+                    <label class="control-label">Pref. Work District</label>
+                    <div id="review_district" name="review_pref_district" class="review">{{user.district}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Module</label>
+                    <div id="review_module" name="review_module" class="review">{{user.module}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Identification Type</label>
+                    <div id="review_type" name="review_type" class="review">{{user.id_type}}</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Identification Number</label>
+                    <div id="review_idn" name="review_idn" class="review">{{user.id_number}}</div>
+                </div>
+
+                <div class="form-group">
+                  <label class="ontrol-label">EZWICH</label>
+                  <div id="review_ezwich" class="review">{{user.ezwich}}</div>
+                </div>
+
+                 <div class="form-group">
+                  <label class="ontrol-label">YEA Number</label>
+                  <div class="col-sm-12 control-label" for="region_control" style="font-size: 25px; padding: 0 !important;">{{user.yea_id}}</div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-sm-6" style="padding:0px !important;">
+                    <button class="btn btn-success btn-block btn-next" type="button" on-click="_onPrint">Print</button>
+                  </div>
+                </div>
+
+              </div>
+           </div>
           </div>
-            
-            
-        </div>
 
 
           </div>
@@ -412,8 +573,6 @@
         <!-- form -->  
         </form>
       </div>
-      <script src="/../../bower_components/jquery/dist/jquery.min.js"></script>
-
 
   </template>
 
@@ -426,19 +585,13 @@
       connectedCallback(){
         super.ready();
 
-        //this.programmes = [];
-        //this.
-
         this.$.step1.style = 'display:block;';
         this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;'
 
         this._loadAllRegions();
+        this._loadAllProgrammes();
+        $('.datepicker').datepicker();
       }
-
-      // ready(){
-      //   super.ready();
-      //   this._loadAllRegions();
-      // }
 
       static get is() { return 'reg-app'; }
       static get properties() {
@@ -494,6 +647,8 @@
 
       _onMoveOne(e){
         //Validate inputs
+        var app = this;
+
         if(this.$.fname.value.length >= 3 &&  !is_alpha_numeric(this.$.fname.value)){
           this._showNormal(this.$.fname);
 
@@ -515,34 +670,86 @@
           return;
         }
 
-        if(is_email_valid(this.$.email.value)){
-          this._showNormal(this.$.email);
 
-          this.user.email = this.$.email.value;
-          this.notifyPath('user.email');
-
+        if(parseInt(this.$.region_control.value) > 0){
+          this.user.personal_region_id = this.$.region_control.value;
+          this._showNormal(this.$.region_control);
         }else{
-          this._showError(this.$.email);
+          this._showError(this.$.region_control);
           return;
         }
 
-        if(is_phone_valid(this.$.phone.value)){
-          this._showNormal(this.$.phone);
+        if(parseInt(this.$.district_control.value) > 0){
+          this.user.personal_district_id = this.$.district_control.value;
+          this._showNormal(this.$.district_control);
 
-          this.user.msisdn = this.$.phone.value;
-          this.notifyPath('user.msisdn');
+          this.user.personal_district = _.find(this.districts, function(item){return item.id == app.user.personal_district_id}).name;
+          this.notifyPath('user.personal_district');
+        }else{
+          this._showError(this.$.district_control);
+          return;
+        }
+
+        if(this.$.town.value.length >= 3){
+          this._showNormal(this.$.town);
+
+          this.user.town = this.$.town.value;
+          this.notifyPath('user.town');
 
         }else{
-          this._showError(this.$.phone);
+          this._showError(this.$.town);
+          return;
+        }
+
+        if(this.$.email.value){
+          if(is_email_valid(this.$.email.value)){
+            this._showNormal(this.$.email);
+
+            this.user.email = this.$.email.value;
+            this.notifyPath('user.email');
+
+          }else{
+            this._showError(this.$.email);
+            return;
+          }
+        }
+
+        if(this.$.phone.value){
+          if(is_phone_valid(this.$.phone.value)){
+            this._showNormal(this.$.phone);
+
+            this.user.msisdn = this.$.phone.value;
+            this.notifyPath('user.msisdn');
+
+          }else{
+            this._showError(this.$.phone);
+            return;
+          }
+        }
+
+        if(parseInt(this.$.programme_control.value) > 0){
+          this.user.program_id = this.$.programme_control.value;
+          this._showNormal(this.$.programme_control);
+
+          this.user.module = _.find(this.programmes, function(item){return item.id == app.user.program_id}).name;
+          this.notifyPath('user.module');
+        }else{
+          this._showError(this.$.programme_control);
           return;
         }
 
         //Validate email and phone
 
-        this._validateEmail();
+        
+        this.$.step1.style = '';
+        this.$.step1_wiz.style = '';
+
+        this.$.step2.style = 'display:block';
+        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        
 
         // this.$.step1.style = '';
-        // this.$.step1_wiz.style = ''
+        // this.$.step1_wiz.style = '';
 
         // this.$.step2.style = 'display:block';
         // this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
@@ -575,6 +782,30 @@
         }else{
           this._showError(this.$.level);
           return;
+        }
+
+        if(this.$.kin_name.value.length >= 3 &&  !is_alpha_numeric(this.$.kin_name.value)){
+          this._showNormal(this.$.kin_name);
+
+          this.user.kin_name = this.$.kin_name.value;
+          this.notifyPath('user.kin_name');
+
+        }else{
+          this._showError(this.$.kin_name);
+          return;
+        }
+
+        if(this.$.kin_msisdn.value){
+          if(is_phone_valid(this.$.kin_msisdn.value)){
+            this._showNormal(this.$.kin_msisdn);
+
+            this.user.kin_msisdn = this.$.kin_msisdn.value;
+            this.notifyPath('user.kin_msisdn');
+
+          }else{
+            this._showError(this.$.kin_msisdn);
+            return;
+          }
         }
 
         if(this.$.m_status.value != 'none'){
@@ -627,35 +858,32 @@
         // this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
+       _onMoveTwoBack(e){
+          this.$.step2.style = '';
+          this.$.step2_wiz.style = '';
+
+          this.$.step1.style = 'display:block';
+          this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+      }
+
       _onMoveThree(e){
         var app = this;
-        if(parseInt(this.$.region_control.value) > 0){
-          this.user.region_id = this.$.region_control.value;
-          this._showNormal(this.$.region_control);
+        if(parseInt(this.$.region_control_2.value) > 0){
+          this.user.region_id = this.$.region_control_2.value;
+          this._showNormal(this.$.region_control_2);
         }else{
-          this._showError(this.$.region_control);
+          this._showError(this.$.region_control_2);
           return;
         }
 
-        if(parseInt(this.$.district_control.value) > 0){
-          this.user.district_id = this.$.district_control.value;
-          this._showNormal(this.$.district_control);
+        if(parseInt(this.$.district_control_2.value) > 0){
+          this.user.district_id = this.$.district_control_2.value;
+          this._showNormal(this.$.district_control_2);
 
           this.user.district = _.find(this.districts, function(item){return item.id == app.user.district_id}).name;
           this.notifyPath('user.district');
         }else{
-          this._showError(this.$.district_control);
-          return;
-        }
-
-        if(parseInt(this.$.programme_control.value) > 0){
-          this.user.program_id = this.$.programme_control.value;
-          this._showNormal(this.$.programme_control);
-
-          this.user.module = _.find(this.programmes, function(item){return item.id == app.user.program_id}).name;
-          this.notifyPath('user.module');
-        }else{
-          this._showError(this.$.programme_control);
+          this._showError(this.$.district_control_2);
           return;
         }
 
@@ -665,6 +893,14 @@
         this.$.step4.style = 'display:block;';
         this.$.step4_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
+      }
+
+      _onMoveThreeBack(e){
+        this.$.step3.style = '';
+        this.$.step3_wiz.style = '';
+
+        this.$.step2.style = 'display:block;';
+        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onMoveFour(){
@@ -686,6 +922,14 @@
 
         // this.$.step5.style = 'display:block;';
         // this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+      }
+
+      _onMoveFourBack(e){
+         this.$.step4.style = '';
+        this.$.step4_wiz.style = '';
+
+        this.$.step3.style = 'display:block;';
+        this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _showError(element){
@@ -746,8 +990,24 @@
         this._saveDetails();
       }
 
+      _onRegisterBack(e){
+        this.$.step5.style = '';
+        this.$.step5_wiz.style = '';
+
+        this.$.step4.style = 'display:block;';
+        this.$.step4_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+      }
+
       _onRegionChanged(e){
         this._loadDistricts(this.$.region_control.value);
+      }
+
+      _onMaritalStatusChanged(e){
+        if(this.$.m_status.value == 'Married'){
+          this.$.spouse_control.style = '';
+        }else{
+          this.$.spouse_control.style = 'display:none;'
+        }
       }
 
       _handleValidateEmailResponse(e){
@@ -768,6 +1028,7 @@
           return;
         }else{
           this._showNormal(this.$.phone);
+
 
           this.$.step1.style = '';
           this.$.step1_wiz.style = ''
@@ -810,6 +1071,15 @@
           this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
         }
+      }
+
+      _onAgree(){
+        this.$.info_page.style = 'display:none;'
+        this.$.form_wizard.style = '';
+      }
+
+      _onPrint(){
+        window.print();
       }
     }
 
