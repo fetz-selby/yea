@@ -14,6 +14,7 @@
      <iron-ajax id='validatePhone' method="GET" handle-as="json" on-response="_handleValidePhoneResponse" debounce-duration="0" on-error="_onValidatePhoneErrorRequest"></iron-ajax>
      <iron-ajax id='validateId' method="GET" handle-as="json" on-response="_handleValideIdResponse" debounce-duration="0" on-error="_onIdErrorRequest"></iron-ajax>
      <iron-ajax id='validateEzwich' method="GET" handle-as="json" on-response="_handleValideEzwichResponse" debounce-duration="0" on-error="_onEzwichErrorRequest"></iron-ajax>
+     <iron-ajax id='sicks' method="GET" handle-as="json" on-response="_handleSickResponse" debounce-duration="0" on-error="_onSickErrorRequest"></iron-ajax>
 
     <style>
       :host {
@@ -28,12 +29,7 @@
     <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../../assets/css/vendor.min.css">
     <link rel="stylesheet" href="../../assets/css/elephant.min.css">
-    <link rel="stylesheet" href="../../assets/css/application.min.css">
-    <link rel="stylesheet" href="../../assets/css/demo.min.css">
-
-    <link href="/../../assets/bootstrap-datepicker-1.6.4-dist/css/bootstrap-datepicker.css" rel="stylesheet">
 
     <div id="page" class="container">
 
@@ -52,7 +48,6 @@
 
           <div class="row">
             <div class="col-sm-9 col-sm-offset-1">
-              <i class="fa fa-info-circle fa-2x text-center" aria-hidden="true"></i>
               <br/>
               <p>1. Make sure you provide accurate and true information about yourself.</p>
               <p>2. Submitting two(2) applications automatically disqualifies you. </p>
@@ -289,13 +284,25 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" >
                     <label class="col-sm-3 control-label" for="sick">Any Form of Disability</label>
                     <div class="col-sm-9">
-                      <select id="sick" class="form-control custom-select">
+                      <select id="sick" class="form-control custom-select" on-change="_onSickChanged">
                         <option value="none">- Select -</option>
-                        <option value="Y">YES</option>
-                        <option value="N">NO</option>
+                        <option value="YES">YES</option>
+                        <option value="NO">NO</option>
+                      </select>
+                    </div>
+                  </div>
+
+                   <div id="sick_box" class="form-group" style="display:none;">
+                    <label class="col-sm-3 control-label" for="sick">Disability</label>
+                    <div class="col-sm-9">
+                      <select id="sick_list" class="form-control custom-select">
+                         <option value="0">- Select -</option>
+                         <template is="dom-repeat" items="{{sicks}}" mutable-data>
+                            <option value='{{item.id}}'>{{item.name}}</option>
+                        </template>
                       </select>
                     </div>
                   </div>
@@ -558,6 +565,10 @@
                 </div>
 
                 <div class="form-group">
+                  <svg id="barcode"></svg>
+                </div>
+
+                <div class="form-group">
                   <div class="col-sm-6" style="padding:0px !important;">
                     <button class="btn btn-success btn-block btn-next" type="button" on-click="_onPrint">Print</button>
                   </div>
@@ -590,7 +601,6 @@
 
         this._loadAllRegions();
         this._loadAllProgrammes();
-        $('.datepicker').datepicker();
       }
 
       static get is() { return 'reg-app'; }
@@ -617,6 +627,11 @@
        _loadAllProgrammes(){
         this.$.programme.url = config.baseUrl+'/programs/';
         this.$.programme.generateRequest();
+      }
+
+      _loadAllSicks(){
+        this.$.sicks.url = config.baseUrl+'/sicks/';
+        this.$.sicks.generateRequest();
       }
 
       _saveDetails(){
@@ -670,6 +685,15 @@
           return;
         }
 
+        if(this.$.mname.value.length >= 3 &&  !is_alpha_numeric(this.$.mname.value)){
+          this._showNormal(this.$.mname);
+
+          this.user.mname = this.$.mname.value;
+          this.notifyPath('user.mname');
+
+        }else{
+          this._showError(this.$.mname);
+        }
 
         if(parseInt(this.$.region_control.value) > 0){
           this.user.personal_region_id = this.$.region_control.value;
@@ -740,6 +764,8 @@
 
         //Validate email and phone
 
+        this._loadAllSicks();
+
         
         this.$.step1.style = '';
         this.$.step1_wiz.style = '';
@@ -757,6 +783,8 @@
 
       _onMoveTwo(e){
         //Validate inputs
+        var app = this;
+
         if(this.$.m_check.checked){
           this.user.gender = 'MALE';
         }else if(this.$.f_check.checked){
@@ -824,6 +852,17 @@
           this._showNormal(this.$.sick);
           console.log(this.$.sick.value);
           this.notifyPath('user.is_disabled');
+
+          if(this.$.sick.value == 'YES'){
+            console.log('Passed here ::: '+ this.$.sick.value);
+            if(parseInt(this.$.sick_list.value) > 0){
+              this._showNormal(this.$.sick_list);
+              this.user.sick_id = this.$.sick_list.value;
+            }else{
+              this._showError(this.$.sick_list);
+            }
+          }
+
         }else{
           this._showError(this.$.sick);
           return;
@@ -848,6 +887,26 @@
           this._showError(this.$.idn);
           return;
         }
+
+        if(this.$.idn.value.length > 7){
+
+          if(this.$.id_type.value == 'VOTERS' && is_valid_voter(this.$.idn.value)){
+            this._showNormal(this.$.idn);
+          }else if(this.$.id_type.value == 'NHIS' && is_valid_nhis(this.$.idn.value)){
+            this._showNormal(this.$.idn);
+          }else if(this.$.id_type.value == 'PASSPORT' && is_valid_passport(this.$.idn.value)){
+            this._showNormal(this.$.idn);
+          }else if(this.$.id_type.value == 'DRIVERS'){
+            this._showNormal(this.$.idn);
+          }else{
+            this._showError(this.$.idn);
+            return;
+          }
+        }else{
+          this._showError(this.$.idn);
+          return;
+        }
+
 
         this._validateID();
 
@@ -978,6 +1037,8 @@
           this.user.yea_id = e.detail.response[0].yea_id;
           this.notifyPath('user.yea_id');
 
+          JsBarcode(this.$.barcode, this.user.yea_id);
+
           this.$.step5.style = '';
           this.$.step5_wiz.style = '';
 
@@ -1007,12 +1068,20 @@
           this.$.spouse_control.style = '';
         }else{
           this.$.spouse_control.style = 'display:none;'
+          this.user.spouse = '';
+        }
+      }
+
+      _onSickChanged(e){
+        if(this.$.sick.value == 'YES'){
+          this.$.sick_box.style = '';
+        }else{
+          this.$.sick_box.style = 'display:none;';
         }
       }
 
       _handleValidateEmailResponse(e){
         if(e.detail.response){
-          console.log('Came with response');
           this._showError(this.$.email);
           return; 
         }else{
@@ -1023,7 +1092,6 @@
 
       _handleValidePhoneResponse(e){
         if(e.detail.response){
-          console.log('Came with response');
           this._showError(this.$.phone);
           return;
         }else{
@@ -1071,6 +1139,10 @@
           this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
         }
+      }
+
+      _handleSickResponse(e){
+        this.sicks = e.detail.response;
       }
 
       _onAgree(){

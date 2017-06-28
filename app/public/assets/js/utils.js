@@ -1,6 +1,6 @@
 var is_alpha_numeric = function(val){
 	if(val){
-		for(var i = 0; i < val.length; i++){
+		for(var i = 0; i < val.trim().length; i++){
 			if(Number.isInteger(parseInt(val.charAt(i)))){
 				return true;
 			}
@@ -26,7 +26,7 @@ var is_email_valid = function(email) {
 }
 
 var is_phone_valid = function(phone){
-	if(phone.length >= 10){
+	if(phone.trim().length >= 10 && phone.trim().length <= 13){
 		for(var i = 0; i < phone.length; i++){
 				if(!Number.isInteger(parseInt(phone.charAt(i)))){
 					if(i == 0 && phone.charAt(0) == '+'){
@@ -41,4 +41,55 @@ var is_phone_valid = function(phone){
 	}else{
 		return false;
 	}
+}
+
+var is_valid_voter = function(voter_num){
+	if(voter_num.trim().length == 10){
+		voter_num = voter_num.trim();
+		for(var i = 0; i < voter_num.trim().length; i++){
+			if(!Number.isInteger(parseInt(voter_num.charAt(i)))){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+var is_valid_nhis = function(nhis_num){
+	if(nhis_num.trim().length == 8){
+		nhis_num = nhis_num.trim();
+		for(var i = 0; i < nhis_num.trim().length; i++){
+			if(!Number.isInteger(parseInt(nhis_num.charAt(i)))){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+var is_valid_passport = function(pass_num){
+
+	if(pass_num.trim().length == 8 && is_letter(pass_num.charAt(0))){
+		pass_num = pass_num.trim();
+		for(var i = 0; i < pass_num.trim().length; i++){
+			if(!Number.isInteger(parseInt(pass_num.charAt(i)))){
+				if(i == 0) continue;
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
+var is_letter = function(char){
+	return char.length === 1 && char.match(/[a-z]/i);
 }

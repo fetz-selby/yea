@@ -10,7 +10,14 @@ var routes = function(Member){
         .post(function(req, res){
             req.body.status = 'A';
             Member.create(req.body).then(member => {
-                res.status(200).json(generateYEAID(member));
+
+                var yea_obj = generateYEAID(member);
+                console.log('YEA id ::: '+yea_obj[0].yea_id);
+                Member.update({yea_id : yea_obj[0].yea_id}, {where : {
+                    id : member.id
+                }}).then(()=>{
+                    res.status(200).json(yea_obj);
+                });
             });        
         });
     
@@ -31,11 +38,11 @@ var generateYEAID = function(member){
         district_id = '00'+district_id;
     }
 
-    if(''+id.length == 1){
+    if((''+id).length == 1){
         id = '000'+id
-    }else if(''+id.length == 2){
+    }else if((''+id).length == 2){
         id = '00'+id;
-    }else if(''+id.length == 3){
+    }else if((''+id).length == 3){
         id = '0'+id;
     }
 

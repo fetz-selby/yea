@@ -52,8 +52,9 @@ var member = function(sequelize){
     	values: ['SINGLE', 'MARRIED', 'DIVORCED']	  
       },
 	  is_disabled: {
-	    type: Sequelize.STRING(1),
-	  },
+		type:   Sequelize.ENUM,
+    	values: ['YES', 'NO']
+      },
 	  literacy_level: {
 		type:   Sequelize.ENUM,
     	values: ['NONE', 'BASIC', 'PRIMARY', 'SECONDARY', 'TERTIARY']	  
@@ -62,6 +63,9 @@ var member = function(sequelize){
 	    type: Sequelize.STRING
 	  },
 	  id_number: {
+	    type: Sequelize.STRING
+	  },
+	  yea_id: {
 	    type: Sequelize.STRING
 	  },
 	  ezwich: {
