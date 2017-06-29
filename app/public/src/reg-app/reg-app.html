@@ -134,7 +134,7 @@
                       <select id="programme_control" class="form-control custom-select">
                         <option value="0">- Select Module -</option>
                         <template is="dom-repeat" items="{{programmes}}" mutable-data>
-                          <option value='{{item.id}}'>{{item.name}} - {{item.alias}}</option>
+                          <option value='{{item.id}}'>{{item.name}}</option>
                         </template>
                       </select>
                     </div>
@@ -520,7 +520,7 @@
 
                 <div class="form-group">
                     <label class="control-label">Name</label>
-                    <div id="review_name" name="review_name" class="review">{{user.fname}} {{user.lname}}</div>
+                    <div id="review_name" name="review_name" class="review">{{user.fname}} {{user.mname}} {{user.lname}}</div>
                 </div>
 
                 <div class="form-group">
@@ -607,6 +607,7 @@
         this._loadAllRegions2();
 
         this._loadAllProgrammes();
+        this.user.mname = '';
       }
 
       static get is() { return 'reg-app'; }
