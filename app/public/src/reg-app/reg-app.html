@@ -28,7 +28,8 @@
       .ezwich-style{width: 64px; padding-bottom: 5px;}
       .custom-hide{display: none;}
       .review{font-size: 15px;color: #b71c1c;font-weight: 600;}
-      .info-container-style{background: #ffcdd2;padding-bottom: 10% !important;padding-top: 10% !important;}    
+      .info-container-style{background: #ffcdd2;padding-bottom: 10% !important;padding-top: 10% !important;}
+      .pad-zero{padding: 0px !important;}
     </style>
     <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -70,60 +71,38 @@
 
       <form id="form_wizard" data-toggle="validator" novalidate="novalidate" style="display:none;">
           <ul class="steps">
-            <li class="step col-xs-2">
+            <li class="step col-xs-4">
               <a class="step-segment" href="#step-1" data-toggle="tab">
                 <span id="step1_wiz" class="step-icon">1</span>
-              </a>
-              <div class="step-content">
-                <strong class="hidden-xs">Basic Information</strong>
-              </div>
-            </li>
-            <li class="step col-xs-2">
-              <a class="step-segment" href="#step-2" data-toggle="tab">
-                <span id="step2_wiz" class="step-icon">2</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Personal Information</strong>
               </div>
             </li>
-            <li class="step col-xs-2">
-              <a class="step-segment" href="#step-3" data-toggle="tab">
-                <span id="step3_wiz" class="step-icon">3</span>
-              </a>
-              <div class="step-content">
-                <strong class="hidden-xs">Work Preference</strong>
-              </div>
-            </li>
-            <li class="step col-xs-2">
-              <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step4_wiz" class="step-icon">4</span>
-              </a>
-              <div class="step-content">
-                <strong class="hidden-xs">Account Details</strong>
-              </div>
-            </li>
-            <li class="step col-xs-2">
-              <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step5_wiz" class="step-icon">5</span>
+            <li class="step col-xs-4">
+              <a class="step-segment" href="#step-2" data-toggle="tab">
+                <span id="step2_wiz" class="step-icon">2</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Review</strong>
               </div>
             </li>
-            <li class="step col-xs-2">
-              <a class="step-segment" href="#step-4" data-toggle="tab">
-                <span id="step6_wiz" class="step-icon">6</span>
+            <li class="step col-xs-4">
+              <a class="step-segment" href="#step-3" data-toggle="tab">
+                <span id="step3_wiz" class="step-icon">3</span>
               </a>
               <div class="step-content">
                 <strong class="hidden-xs">Receipt</strong>
               </div>
             </li>
+            
+            
           </ul>
           <div class="tab-content" style="margin-top: 15px !important;">
 
             <div id="step1" class="tab-pane custom-hide">
               <h4 class="text-center m-y-md">
-                <span>Basic Information</span>
+                <span>Personal Information</span>
               </h4>
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
@@ -193,32 +172,12 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="email" class="control-label col-sm-3">Email</label>
-                    <div class="col-sm-9">
-                      <input id="email" class="form-control" type="email" name="email_2" spellcheck="false" autocomplete="off" >
-                    </div>
-                  </div>
-
-                  <div class="form-group">
                     <label for="phone" class="control-label col-sm-3">Phone</label>
                     <div class="col-sm-9">
                       <input id="phone" class="form-control" type="text" name="phone" spellcheck="false" autocomplete="off">
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveOne">Next</button>
-                  </div>
-
-                  
-                </div>
-              </div>
-            </div>
-
-            <div id="step2" class="tab-pane custom-hide">
-
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
                   <div class="form-group">
                     <label class="col-sm-3 control-label">Gender</label>
                     <div class="col-sm-9">
@@ -235,10 +194,88 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="dob">Date of Birth</label>
                     <div class="col-sm-9">
-                      <input id="dob" name="dob" type="date" max="2000-01-01" min="1982-01-01"  data-rule-required="true" data-msg-required="Please enter your date of birth">
+                      <div class="col-sm-4 pad-zero">
+                        <select id="day_list" class="form-control custom-select">
+                          <option value="0">- Day -</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                          <option value="11">11</option>
+                          <option value="12">12</option>
+                          <option value="13">13</option>
+                          <option value="14">14</option>
+                          <option value="15">15</option>
+                          <option value="16">16</option>
+                          <option value="17">17</option>
+                          <option value="18">18</option>
+                          <option value="19">19</option>
+                          <option value="20">20</option>
+                          <option value="21">21</option>
+                          <option value="22">22</option>
+                          <option value="23">23</option>
+                          <option value="24">24</option>
+                          <option value="25">25</option>
+                          <option value="26">26</option>
+                          <option value="27">27</option>
+                          <option value="28">28</option>
+                          <option value="29">29</option>
+                          <option value="30">30</option>
+                          <option value="31">31</option>
+                        </select>                      
+                      </div>
+                      <div class="col-sm-4 pad-zero">
+                         <select id="month_list" class="form-control custom-select">
+                          <option value="0">- Month -</option>
+                          <option value="01">January</option>
+                          <option value="02">Febuary</option>
+                          <option value="03">March</option>
+                          <option value="04">April</option>
+                          <option value="05">May</option>
+                          <option value="06">June</option>
+                          <option value="07">July</option>
+                          <option value="08">August</option>
+                          <option value="09">September</option>
+                          <option value="10">October</option>
+                          <option value="11">November</option>
+                          <option value="12">December</option>
+                        </select> 
+                     </div>
+                      <div class="col-sm-4 pad-zero">
+                        <select id="year_list" class="form-control custom-select">
+                          <option value="0">- Year -</option>
+                          <option value="2002">2002</option>
+                          <option value="2001">2001</option>
+                          <option value="2000">2000</option>
+                          <option value="1999">1999</option>
+                          <option value="1998">1998</option>
+                          <option value="1997">1997</option>
+                          <option value="1996">1996</option>
+                          <option value="1995">1995</option>
+                          <option value="1994">1994</option>
+                          <option value="1993">1993</option>
+                          <option value="1992">1992</option>
+                          <option value="1991">1991</option>
+                          <option value="1990">1990</option>
+                          <option value="1989">1989</option>
+                          <option value="1988">1988</option>
+                          <option value="1987">1987</option>
+                          <option value="1986">1986</option>
+                          <option value="1985">1985</option>
+                          <option value="1984">1984</option>
+                          <option value="1983">1983</option>
+                          <option value="1982">1982</option>
+                        </select>  
+                      </div>
                     </div>
                   </div>
 
@@ -272,21 +309,6 @@
                     <label for="spouse" class="col-sm-3 control-label">Spouse Name</label>
                     <div class="col-sm-9">
                     <input id="spouse" class="form-control" type="text" name="spouse">
-                    </div>
-                  </div>
-
-
-                  <div class="form-group">
-                    <label for="kin_name" class="col-sm-3 control-label">Next of Kin</label>
-                    <div class="col-sm-9">
-                    <input id="kin_name" class="form-control" type="text" name="kin_name">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="kin_msisdn" class="col-sm-3 control-label">Phone Number of Kin</label>
-                    <div class="col-sm-9">
-                    <input id="kin_msisdn" class="form-control" type="text" name="kin_msisdn">
                     </div>
                   </div>
 
@@ -333,36 +355,8 @@
                     </div>
                   </div>
 
-                  <br/>
                   <div class="form-group">
-                    <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwoBack">Back</button>
-                    </div>
-                    <div class="col-sm-6">  
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwo">Next</button>
-                    </div>
-                  </div>
-
-              </div>
-            </div>
-              
-            </div>
-
-
-           <div id="step3" class="tab-pane custom-hide">
-
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
-
-                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="region_control_2">Module</label>
-                    <div class="col-sm-9">
-                    <label>{{user.module}}</label>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="col-sm-3 control-label" for="region_control_2">Regions</label>
+                    <label class="col-sm-3 control-label" for="region_control_2">Pref. Regions</label>
                     <div class="col-sm-9">
                       <select id="region_control_2" class="form-control custom-select" on-change="_onRegion2Changed">
                         <option value="0">- Select Region -</option>
@@ -374,7 +368,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="district_control_2">Districts</label>
+                    <label class="col-sm-3 control-label" for="district_control_2">Pref. Districts</label>
                     <div class="col-sm-9">
                       <select id="district_control_2" class="form-control custom-select">
                         <option value="0">- Select District -</option>
@@ -385,28 +379,6 @@
                     </div>
                   </div>
 
-                  <br/>
-                  <div class="form-group">
-                    <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThreeBack">Back</button>
-                    </div>
-                    <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Next</button>
-                    </div>
-                  </div>
-                  
-              </div>
-            </div>
-              
-              
-          </div>
-
-          <div id="step4" class="tab-pane custom-hide">
-              <h4 class="text-center m-y-md">
-                <span>Enter your account details</span>
-              </h4>
-              <div class="row">
-                <div class="col-sm-8 col-sm-offset-2">
                   <div class="form-group">
                     <div class="col-sm-3 control-label">
                       <img class="ezwich-style" src="../../assets/img/ezwich.png">
@@ -422,22 +394,18 @@
                       <input id="ezw2" class="form-control" type="text" name="creditcard_number_2" placeholder="Confirm Ezwich Number">
                     </div>
                   </div>
-                 
-                  <br/>
+
                   <div class="form-group">
-                    <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFourBack">Back</button>
-                    </div>
-                    <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveFour">Review</button>
-                    </div>
+                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveOne">Next</button>
                   </div>
-                  
+
+
                 </div>
               </div>
             </div>
 
-          <div id="step5" class="tab-pane custom-hide">
+
+          <div id="step2" class="tab-pane custom-hide">
 
             <div class="row">
              
@@ -505,7 +473,7 @@
         </div>
 
 
-         <div id="step6" class="tab-pane custom-hide">
+         <div id="step3" class="tab-pane custom-hide">
 
             <div class="row">
 
@@ -607,8 +575,9 @@
 
         this._loadAllRegions();
         this._loadAllRegions2();
-
+        this._loadAllSicks();
         this._loadAllProgrammes();
+
         this.user.mname = '';
       }
 
@@ -662,11 +631,6 @@
       _validatePhone(){
         this.$.validatePhone.url = config.baseUrl+'/members/msisdn/'+this.user.msisdn;
         this.$.validatePhone.generateRequest();
-      }
-
-      _validateEmail(){
-        this.$.validateEmail.url = config.baseUrl+'/members/email/'+this.user.email;
-        this.$.validateEmail.generateRequest();
       }
 
       _validateID(){
@@ -744,32 +708,6 @@
           return;
         }
 
-        if(this.$.email.value){
-          if(is_email_valid(this.$.email.value)){
-            this._showNormal(this.$.email);
-
-            this.user.email = this.$.email.value;
-            this.notifyPath('user.email');
-
-          }else{
-            this._showError(this.$.email);
-            return;
-          }
-        }
-
-        if(this.$.phone.value){
-          if(is_phone_valid(this.$.phone.value)){
-            this._showNormal(this.$.phone);
-
-            this.user.msisdn = this.$.phone.value;
-            this.notifyPath('user.msisdn');
-
-          }else{
-            this._showError(this.$.phone);
-            return;
-          }
-        }
-
         if(parseInt(this.$.programme_control.value) > 0){
           this.user.program_id = this.$.programme_control.value;
           this._showNormal(this.$.programme_control);
@@ -781,30 +719,7 @@
           return;
         }
 
-        //Validate email and phone
-
-        this._loadAllSicks();
-
-        
-        this.$.step1.style = '';
-        this.$.step1_wiz.style = '';
-
-        this.$.step2.style = 'display:block';
-        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-        
-
-        // this.$.step1.style = '';
-        // this.$.step1_wiz.style = '';
-
-        // this.$.step2.style = 'display:block';
-        // this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-      }
-
-      _onMoveTwo(e){
-        //Validate inputs
-        var app = this;
-
-        if(this.$.m_check.checked){
+         if(this.$.m_check.checked){
           this.user.gender = 'MALE';
         }else if(this.$.f_check.checked){
           this.user.gender = 'FEMALE';
@@ -815,10 +730,31 @@
         this.notifyPath('user.gender');
 
 
-        if(this.$.dob.value){
-          this.user.dob = this.$.dob.value;
-          console.log(this.$.dob.value);
-          this.notifyPath('user.dob');
+        if(parseInt(this.$.day_list.value) > 0){
+          this._showNormal(this.$.day_list);
+          this.user.day = this.$.day_list.value;
+          this.notifyPath('user.day');
+        }else{
+          this._showError(this.$.day_list);
+          return;
+        }
+
+        if(parseInt(this.$.month_list.value) > 0){
+          this._showNormal(this.$.month_list);
+          this.user.month = this.$.month_list.value;
+          this.notifyPath('user.month');
+        }else{
+          this._showError(this.$.month_list);
+          return;
+        }
+
+        if(parseInt(this.$.year_list.value) > 0){
+          this._showNormal(this.$.year_list);
+          this.user.year = this.$.year_list.value;
+          this.notifyPath('user.year');
+        }else{
+          this._showError(this.$.year_list);
+          return;
         }
 
         if(this.$.level.value != 'none'){
@@ -829,30 +765,6 @@
         }else{
           this._showError(this.$.level);
           return;
-        }
-
-        if(this.$.kin_name.value.length >= 3 &&  !is_alpha_numeric(this.$.kin_name.value)){
-          this._showNormal(this.$.kin_name);
-
-          this.user.kin_name = this.$.kin_name.value;
-          this.notifyPath('user.kin_name');
-
-        }else{
-          this._showError(this.$.kin_name);
-          return;
-        }
-
-        if(this.$.kin_msisdn.value){
-          if(is_phone_valid(this.$.kin_msisdn.value)){
-            this._showNormal(this.$.kin_msisdn);
-
-            this.user.kin_msisdn = this.$.kin_msisdn.value;
-            this.notifyPath('user.kin_msisdn');
-
-          }else{
-            this._showError(this.$.kin_msisdn);
-            return;
-          }
         }
 
         if(this.$.m_status.value != 'none'){
@@ -926,26 +838,6 @@
           return;
         }
 
-
-        this._validateID();
-
-        // this.$.step2.style = '';
-        // this.$.step2_wiz.style = '';
-
-        // this.$.step3.style = 'display:block;';
-        // this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-      }
-
-       _onMoveTwoBack(e){
-          this.$.step2.style = '';
-          this.$.step2_wiz.style = '';
-
-          this.$.step1.style = 'display:block';
-          this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-      }
-
-      _onMoveThree(e){
-        var app = this;
         if(parseInt(this.$.region_control_2.value) > 0){
           this.user.region_id = this.$.region_control_2.value;
           this._showNormal(this.$.region_control_2);
@@ -965,23 +857,6 @@
           return;
         }
 
-        this.$.step3.style = '';
-        this.$.step3_wiz.style = '';
-
-        this.$.step4.style = 'display:block;';
-        this.$.step4_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-
-      }
-
-      _onMoveThreeBack(e){
-        this.$.step3.style = '';
-        this.$.step3_wiz.style = '';
-
-        this.$.step2.style = 'display:block;';
-        this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-      }
-
-      _onMoveFour(){
         if(is_valid_ezwich(this.$.ezw.value) && is_valid_ezwich(this.$.ezw2.value)){
             console.log('Got validated !!!');
             if(this.$.ezw.value === this.$.ezw2.value){
@@ -1001,21 +876,16 @@
           return;
         }
 
-        this._validateEzwich();
+        this._validateID();
 
-        // this.$.step4.style = '';
-        // this.$.step4_wiz.style = '';
+        // this._validateEzwich();
+        
+        // this.$.step1.style = '';
+        // this.$.step1_wiz.style = '';
 
-        // this.$.step5.style = 'display:block;';
-        // this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-      }
-
-      _onMoveFourBack(e){
-         this.$.step4.style = '';
-        this.$.step4_wiz.style = '';
-
-        this.$.step3.style = 'display:block;';
-        this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        // this.$.step2.style = 'display:block';
+        // this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        
       }
 
       _showError(element){
@@ -1078,24 +948,28 @@
 
           JsBarcode(this.$.barcode, this.user.yea_id);
 
-          this.$.step5.style = '';
-          this.$.step5_wiz.style = '';
+          this.$.step2.style = '';
+          this.$.step2_wiz.style = '';
 
-          this.$.step6.style = 'display:block;';
-          this.$.step6_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+          this.$.step3.style = 'display:block;';
+          this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
         }
       }
 
       _onRegister(e){
+
+        //make date 
+
+        this.user.dob = this.user.year+'-'+this.user.month+'-'+this.user.day;
         this._saveDetails();
       }
 
       _onRegisterBack(e){
-        this.$.step5.style = '';
-        this.$.step5_wiz.style = '';
+        this.$.step2.style = '';
+        this.$.step2_wiz.style = '';
 
-        this.$.step4.style = 'display:block;';
-        this.$.step4_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+        this.$.step1.style = 'display:block;';
+        this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
       }
 
       _onRegionChanged(e){
@@ -1140,7 +1014,6 @@
         }else{
           this._showNormal(this.$.phone);
 
-
           this.$.step1.style = '';
           this.$.step1_wiz.style = ''
 
@@ -1156,13 +1029,7 @@
           return;
         }else{
           this._showNormal(this.$.idn);
-
-          this.$.step2.style = '';
-          this.$.step2_wiz.style = '';
-
-          this.$.step3.style = 'display:block;';
-          this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
-
+          this._validateEzwich();
         }
       }
 
@@ -1175,11 +1042,11 @@
           this._showNormal(this.$.ezw);
           this._showNormal(this.$.ezw2);
 
-          this.$.step4.style = '';
-          this.$.step4_wiz.style = '';
+          this.$.step1.style = '';
+          this.$.step1_wiz.style = '';
 
-          this.$.step5.style = 'display:block;';
-          this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
+          this.$.step2.style = 'display:block;';
+          this.$.step2_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
         }
       }
