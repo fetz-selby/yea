@@ -7,6 +7,10 @@
   <template>
      <iron-ajax id='regions' method="GET" handle-as="json" on-response="_handleRegionResponse" debounce-duration="0" on-error="_onRegionErrorRequest"></iron-ajax>
      <iron-ajax id='districts' method="GET" handle-as="json" on-response="_handleDistrictResponse" debounce-duration="0" on-error="_onDistrictErrorRequest"></iron-ajax>
+     
+     <iron-ajax id='regions2' method="GET" handle-as="json" on-response="_handleRegion2Response" debounce-duration="0" on-error="_onRegion2ErrorRequest"></iron-ajax>
+     <iron-ajax id='districts2' method="GET" handle-as="json" on-response="_handleDistrict2Response" debounce-duration="0" on-error="_onDistrict2ErrorRequest"></iron-ajax>
+
      <iron-ajax id='programme' method="GET" handle-as="json" on-response="_handleProgrammeResponse" debounce-duration="0" on-error="_onProgrammeErrorRequest"></iron-ajax>
      <iron-ajax id='register' method="POST" handle-as="json" content-type="application/json" on-response="_handleRegisterResponse" debounce-duration="0" on-error="_onRegisterErrorRequest"></iron-ajax>
 
@@ -241,7 +245,7 @@
                     <div class="col-sm-9">
                       <select id="level" class="form-control custom-select">
                         <option value="none">- Select -</option>
-                        <option value="zero">NONE</option>\
+                        <option value="None">NONE</option>\
                         <option value="Basic">Basic</option>
                         <option value="Primary">Primary</option>
                         <option value="Secondary">Secondary</option>
@@ -358,9 +362,9 @@
                   <div class="form-group">
                     <label class="col-sm-3 control-label" for="region_control_2">Regions</label>
                     <div class="col-sm-9">
-                      <select id="region_control_2" class="form-control custom-select" on-change="_onRegionChanged">
+                      <select id="region_control_2" class="form-control custom-select" on-change="_onRegion2Changed">
                         <option value="0">- Select Region -</option>
-                        <template is="dom-repeat" items="{{regions}}" mutable-data>
+                        <template is="dom-repeat" items="{{regions2}}" mutable-data>
                           <option value='{{item.id}}'>{{item.name}}</option>
                         </template>
                       </select>
@@ -372,7 +376,7 @@
                     <div class="col-sm-9">
                       <select id="district_control_2" class="form-control custom-select">
                         <option value="0">- Select District -</option>
-                        <template is="dom-repeat" items="{{districts}}" mutable-data>
+                        <template is="dom-repeat" items="{{districts2}}" mutable-data>
                           <option value='{{item.id}}'>{{item.name}}</option>
                         </template>
                       </select>
@@ -560,7 +564,7 @@
                 </div>
 
                  <div class="form-group">
-                  <label class="ontrol-label">YEA Number</label>
+                  <label class="ontrol-label">Registration Number</label>
                   <div class="col-sm-12 control-label" for="region_control" style="font-size: 25px; padding: 0 !important;">{{user.yea_id}}</div>
                 </div>
 
@@ -600,6 +604,8 @@
         this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;'
 
         this._loadAllRegions();
+        this._loadAllRegions2();
+
         this._loadAllProgrammes();
       }
 
@@ -619,9 +625,19 @@
         this.$.regions.generateRequest();
       }
 
+       _loadAllRegions2(){
+        this.$.regions2.url = config.baseUrl+'/regions';
+        this.$.regions2.generateRequest();
+      }
+
        _loadDistricts(region_id){
         this.$.districts.url = config.baseUrl+'/districts/region/'+region_id;
         this.$.districts.generateRequest();
+      }
+
+       _loadDistricts2(region_id){
+        this.$.districts2.url = config.baseUrl+'/districts/region/'+region_id;
+        this.$.districts2.generateRequest();
       }
 
        _loadAllProgrammes(){
@@ -939,7 +955,7 @@
           this.user.district_id = this.$.district_control_2.value;
           this._showNormal(this.$.district_control_2);
 
-          this.user.district = _.find(this.districts, function(item){return item.id == app.user.district_id}).name;
+          this.user.district = _.find(this.districts2, function(item){return item.id == app.user.district_id}).name;
           this.notifyPath('user.district');
         }else{
           this._showError(this.$.district_control_2);
@@ -963,15 +979,23 @@
       }
 
       _onMoveFour(){
-        if(this.$.ezw.value === this.$.ezw2.value){
-          this.user.ezwich = this.$.ezw.value;
-          this._showNormal(this.$.ezw);
-          this._showNormal(this.$.ezw2);
+        if(is_valid_ezwich(this.$.ezw.value) && is_valid_ezwich(this.$.ezw2.value)){
+            console.log('Got validated !!!');
+            if(this.$.ezw.value === this.$.ezw2.value){
+              this.user.ezwich = this.$.ezw.value;
+              this._showNormal(this.$.ezw);
+              this._showNormal(this.$.ezw2);
 
-          this.notifyPath('user.ezwich');
+              this.notifyPath('user.ezwich');
+            }else{
+              this._showError(this.$.ezw);
+              this._showError(this.$.ezw2);
+            }
         }else{
           this._showError(this.$.ezw);
           this._showError(this.$.ezw2);
+
+          return;
         }
 
         this._validateEzwich();
@@ -1008,6 +1032,11 @@
         this.set('regions', e.detail.response);
       }
 
+       _handleRegion2Response(e){
+        console.log(JSON.stringify(e.detail.response));
+        this.set('regions2', e.detail.response);
+      }
+
       _onRegionErrorRequest(e){
 
       }
@@ -1015,6 +1044,13 @@
       _handleDistrictResponse(e){
         console.log(JSON.stringify(e.detail.response));
         this.set('districts', e.detail.response);
+
+        this._loadAllProgrammes();
+      }
+
+      _handleDistrict2Response(e){
+        console.log(JSON.stringify(e.detail.response));
+        this.set('districts2', e.detail.response);
 
         this._loadAllProgrammes();
       }
@@ -1061,6 +1097,10 @@
 
       _onRegionChanged(e){
         this._loadDistricts(this.$.region_control.value);
+      }
+
+      _onRegion2Changed(e){
+        this._loadDistricts2(this.$.region_control_2.value);
       }
 
       _onMaritalStatusChanged(e){

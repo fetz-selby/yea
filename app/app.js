@@ -38,7 +38,7 @@ members.belongsTo(regions);
 members.belongsTo(sicks);
 
 //Init all Models
-sequelize.sync({force: true}).then(function(){
+sequelize.sync().then(function(){
     regions.bulkCreate([{name: 'Western Region',status: 'A'},
       {name : 'Central Region', status: 'A'},
       {name: 'Greater Accra Region', status: 'A'},

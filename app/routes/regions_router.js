@@ -10,7 +10,7 @@ var routes = function(Region){
     regionsRouter.route('/')
                 .get(function(req, res){
                               
-                  Region.findAll().then(regions => {
+                  Region.findAll({order:[['name', 'ASC']]}).then(regions => {
                     res.status(200).json(regions);
                   })
 

@@ -73,6 +73,21 @@ var is_valid_nhis = function(nhis_num){
 	return false;
 }
 
+var is_valid_ezwich = function(ezwich_num){
+	if(ezwich_num.trim().length == 9 || ezwich_num.trim().length == 10){
+		ezwich_num = ezwich_num.trim();
+		for(var i = 0; i < ezwich_num.trim().length; i++){
+			if(!Number.isInteger(parseInt(ezwich_num.charAt(i)))){
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	return false;
+}
+
 var is_valid_passport = function(pass_num){
 
 	if(pass_num.trim().length == 8 && is_letter(pass_num.charAt(0))){
