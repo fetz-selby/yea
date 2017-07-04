@@ -21,22 +21,6 @@ var member = function(sequelize){
 	  personal_region_id: {
 	  	type : Sequelize.INTEGER
 	  },
-	  kin_name :{
-	  	type : Sequelize.STRING
-	  },
-	  kin_msisdn :{
-	  	type : Sequelize.STRING
-	  },
-	  spouse : {
-	  	type : Sequelize.STRING
-	  },
-	  email: {
-		type: Sequelize.STRING,
-	    unique : true,
-	    validate : {
-	    	isEmail : true
-	    }	
-	  },
 	  gender: {
 		type:   Sequelize.ENUM,
     	values: ['MALE', 'FEMALE']
