@@ -41,7 +41,7 @@ var member = function(sequelize){
       },
 	  literacy_level: {
 		type:   Sequelize.ENUM,
-    	values: ['NONE', 'BASIC', 'PRIMARY', 'SECONDARY', 'TERTIARY']	  
+    	values: ['NONE', 'BECE', 'SSCE/WASSCE', 'TECHNICAL', 'VOCATIONAL', 'DIPLOMA', 'HND', 'BACHELOR DEGREE', 'MASTERS', 'OTHER']	  
       },
 	  id_type: {
 	    type: Sequelize.STRING

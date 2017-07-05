@@ -19,6 +19,7 @@ var districts = require('./models/districts_model')(sequelize),
     shortlist = require('./models/shortlists_model')(sequelize),
     engages = require('./models/engaged_model')(sequelize),
     sicks = require('./models/sick_model')(sequelize),
+    utils = require('./models/utils_model')(sequelize),
     regions = require('./models/regions_model')(sequelize);
 
 
@@ -67,6 +68,7 @@ var usersRoute = require('./routes/users_router')(users),
     programsRoute = require('./routes/programs_router')(programs),
     registerRoute = require('./routes/register_router')(members),
     sickRoute = require('./routes/sicks_router')(sicks),
+    utilsRoute = require('./routes/utils_router')(utils),
     authRoute = require('./routes/auth_router')(pool);
 
 //Set middlewares
@@ -118,6 +120,8 @@ app.use('/eghana/yea/api/members', membersRoute.router);
 app.use('/eghana/yea/api/users', usersRoute.router);
 app.use('/eghana/yea/api/register', registerRoute.router);
 app.use('/eghana/yea/api/sicks', sickRoute.router);
+app.use('/eghana/yea/api/utils', utilsRoute.router);
+
 
 
 

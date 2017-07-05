@@ -26,7 +26,7 @@ var is_email_valid = function(email) {
 }
 
 var is_phone_valid = function(phone){
-	if(phone.trim().length >= 10 && phone.trim().length <= 13){
+	if(phone.trim().length >= 10){
 		for(var i = 0; i < phone.length; i++){
 				if(!Number.isInteger(parseInt(phone.charAt(i)))){
 					if(i == 0 && phone.charAt(0) == '+'){

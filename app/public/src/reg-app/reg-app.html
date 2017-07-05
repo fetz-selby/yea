@@ -19,6 +19,7 @@
      <iron-ajax id='validateId' method="GET" handle-as="json" on-response="_handleValideIdResponse" debounce-duration="0" on-error="_onIdErrorRequest"></iron-ajax>
      <iron-ajax id='validateEzwich' method="GET" handle-as="json" on-response="_handleValideEzwichResponse" debounce-duration="0" on-error="_onEzwichErrorRequest"></iron-ajax>
      <iron-ajax id='sicks' method="GET" handle-as="json" on-response="_handleSickResponse" debounce-duration="0" on-error="_onSickErrorRequest"></iron-ajax>
+     <iron-ajax id='date' method="GET" handle-as="json" on-response="_handleDateResponse" debounce-duration="0" on-error="_onDateErrorRequest"></iron-ajax>
 
     <style>
       :host {
@@ -31,6 +32,8 @@
       .info-container-style{background: #ffcdd2;padding-bottom: 10% !important;padding-top: 10% !important;}  
       .pad-zero{padding: 0px !important;}  
       .agree-btn{background: #2e7d32; color: #EAEAEA;}
+      .nxt-btn{background: #2e7d32 !important; color: #EAEAEA !important; border-color: #2e7d32 !important;}
+      .error-style{color: #c62828;}
     </style>
     <link href="../../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../../bower_components/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -137,6 +140,19 @@
               <h4 class="text-center m-y-md">
                 <span>Basic Information</span>
               </h4>
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label id="error_container1" class="error-style"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br/>
+
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
 
@@ -212,7 +228,7 @@
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveOne">Next</button>
+                    <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveOne">Next</button>
                   </div>
                   
                 </div>
@@ -220,6 +236,18 @@
             </div>
 
             <div id="step2" class="tab-pane custom-hide">
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label id="error_container2" class="error-style"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br/>
 
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
@@ -242,44 +270,9 @@
                   <div class="form-group">
                    <label class="col-sm-3 control-label" for="dob">Date of Birth</label>
                    <div class="col-sm-9">
-                     <div class="col-sm-4 pad-zero">
-                       <select id="day_list" class="form-control custom-select">
-                         <option value="0">- Day -</option>
-                         <option value="1">1</option>
-                         <option value="2">2</option>
-                         <option value="3">3</option>
-                         <option value="4">4</option>
-                         <option value="5">5</option>
-                         <option value="6">6</option>
-                         <option value="7">7</option>
-                         <option value="8">8</option>
-                         <option value="9">9</option>
-                         <option value="10">10</option>
-                         <option value="11">11</option>
-                         <option value="12">12</option>
-                         <option value="13">13</option>
-                         <option value="14">14</option>
-                         <option value="15">15</option>
-                         <option value="16">16</option>
-                         <option value="17">17</option>
-                         <option value="18">18</option>
-                         <option value="19">19</option>
-                         <option value="20">20</option>
-                         <option value="21">21</option>
-                         <option value="22">22</option>
-                         <option value="23">23</option>
-                         <option value="24">24</option>
-                         <option value="25">25</option>
-                         <option value="26">26</option>
-                         <option value="27">27</option>
-                         <option value="28">28</option>
-                         <option value="29">29</option>
-                         <option value="30">30</option>
-                         <option value="31">31</option>
-                       </select>                      
-                     </div>
-                     <div class="col-sm-4 pad-zero">
-                        <select id="month_list" class="form-control custom-select">
+
+                    <div class="col-sm-4 pad-zero">
+                      <select id="month_list" class="form-control custom-select" on-change="_onMonthChange">
                          <option value="0">- Month -</option>
                          <option value="01">January</option>
                          <option value="02">Febuary</option>
@@ -295,6 +288,16 @@
                          <option value="12">December</option>
                        </select> 
                     </div>
+
+                     <div class="col-sm-4 pad-zero">
+                       <select id="day_list" class="form-control custom-select">
+                         <option value="0">- Day -</option>
+                         <template is="dom-repeat" items="{{days}}" mutable-data>
+                           <option value="{{item.val}}">{{item.num}}</option>
+                         </template>
+                       </select>                      
+                     </div>
+                     
                      <div class="col-sm-4 pad-zero">
                        <select id="year_list" class="form-control custom-select">
                          <option value="0">- Year -</option>
@@ -325,15 +328,20 @@
                  </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="level">Literacy Level</label>
+                    <label class="col-sm-3 control-label" for="level">Literate/Illiterate</label>
                     <div class="col-sm-9">
                       <select id="level" class="form-control custom-select">
                         <option value="zero">- Select -</option>
                         <option value="None">NONE</option>\
-                        <option value="Basic">Basic</option>
-                        <option value="Primary">Primary</option>
-                        <option value="Secondary">Secondary</option>
-                        <option value="Tertiary">Tertiary</option>
+                        <option value="BECE">BECE</option>
+                        <option value="SSCE/WASSCE">SSCE/WASSCE</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Vocational">Vocational</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="HND">HND</option>
+                        <option value="Bachelor Degree">Bachelor Degree</option>
+                        <option value="Masters">Masters</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
@@ -406,7 +414,7 @@
                       <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwoBack">Back</button>
                     </div>
                     <div class="col-sm-6">  
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwo">Next</button>
+                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveTwo">Next</button>
                     </div>
                   </div>
 
@@ -417,6 +425,30 @@
 
 
            <div id="step3" class="tab-pane custom-hide">
+
+
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label id="error_container3" class="error-style"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br/>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label id="error_container3" class="error-style"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br/>
 
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
@@ -458,7 +490,7 @@
                       <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThreeBack">Back</button>
                     </div>
                     <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveThree">Next</button>
+                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveThree">Next</button>
                     </div>
                   </div>
                   
@@ -471,8 +503,28 @@
               <h4 class="text-center m-y-md">
                 <span>Enter your account details</span>
               </h4>
+
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
+                  <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label id="error_container4" class="error-style"></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br/>
+              <div class="row">
+                <div class="col-sm-8 col-sm-offset-2">
+
+                  <div class="form-group">
+                    
+                    <div class="col-sm-9 col-sm-offset-3">
+                      <label>Please do NOT include the dash ('-')</label>
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <div class="col-sm-3 control-label">
                       <img class="ezwich-style" src="../../assets/img/ezwich.png">
@@ -495,7 +547,7 @@
                       <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFourBack">Back</button>
                     </div>
                     <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveFour">Review</button>
+                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveFour">Review</button>
                     </div>
                   </div>
                   
@@ -560,7 +612,7 @@
                     <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegisterBack">Back</button>
                   </div>
                   <div class="col-sm-6">
-                    <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegister">Register</button>
+                    <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onRegister">Register</button>
                   </div>
                 </div>
                 
@@ -632,9 +684,16 @@
                 </div>
 
                  <div class="form-group">
+                  <label class="ontrol-label">Date of Registration</label>
+                  <div class="review">{{user.reg_date}}</div>
+                </div>
+
+                 <div class="form-group">
                   <label class="ontrol-label">Registration Number</label>
                   <div class="col-sm-12 control-label" for="region_control" style="font-size: 25px; padding: 0 !important;">{{user.yea_id}}</div>
                 </div>
+
+                
 
                 <div class="form-group">
                   <svg id="barcode"></svg>
@@ -642,7 +701,7 @@
 
                 <div class="form-group">
                   <div class="col-sm-6" style="padding:0px !important;">
-                    <button class="btn btn-success btn-block btn-next" type="button" on-click="_onPrint">Print</button>
+                    <button class="btn btn-success btn-block btn-next nxt-btn" type="button" on-click="_onPrint">Print</button>
                   </div>
                 </div>
 
@@ -674,6 +733,14 @@
 
         this._loadAllProgrammes();
         this.user.mname = '';
+        this.default_days1 = [{num : 1, val : 1},{num : 2, val : 2},{num : 3, val : 3},{num : 4, val : 4},{num : 5, val : 5},{num : 6, val : 6},{num : 7, val : 7},{num : 8, val : 8},{num : 9, val : 9},{num : 10, val : 10},{num : 11, val : 11},{num : 12, val : 12},{num : 13, val : 13},{num : 14, val : 14},{num : 15, val : 15},{num : 16, val : 16},{num : 17, val : 17},{num : 18, val : 18},{num : 19, val : 19},{num : 20, val : 20},{num : 21, val : 21},{num : 22, val : 22},{num : 23, val : 23},{num : 24, val : 24},{num : 25, val : 25},{num : 26, val : 26},{num : 27, val : 27},{num : 28, val : 28},{num : 29, val : 29}];
+
+        this.default_days2 = [{num : 1, val : 1},{num : 2, val : 2},{num : 3, val : 3},{num : 4, val : 4},{num : 5, val : 5},{num : 6, val : 6},{num : 7, val : 7},{num : 8, val : 8},{num : 9, val : 9},{num : 10, val : 10},{num : 11, val : 11},{num : 12, val : 12},{num : 13, val : 13},{num : 14, val : 14},{num : 15, val : 15},{num : 16, val : 16},{num : 17, val : 17},{num : 18, val : 18},{num : 19, val : 19},{num : 20, val : 20},{num : 21, val : 21},{num : 22, val : 22},{num : 23, val : 23},{num : 24, val : 24},{num : 25, val : 25},{num : 26, val : 26},{num : 27, val : 27},{num : 28, val : 28},{num : 29, val : 29},{num : 30, val : 30}];
+
+        this.default_days3 = [{num : 1, val : 1},{num : 2, val : 2},{num : 3, val : 3},{num : 4, val : 4},{num : 5, val : 5},{num : 6, val : 6},{num : 7, val : 7},{num : 8, val : 8},{num : 9, val : 9},{num : 10, val : 10},{num : 11, val : 11},{num : 12, val : 12},{num : 13, val : 13},{num : 14, val : 14},{num : 15, val : 15},{num : 16, val : 16},{num : 17, val : 17},{num : 18, val : 18},{num : 19, val : 19},{num : 20, val : 20},{num : 21, val : 21},{num : 22, val : 22},{num : 23, val : 23},{num : 24, val : 24},{num : 25, val : 25},{num : 26, val : 26},{num : 27, val : 27},{num : 28, val : 28},{num : 29, val : 29},{num : 30, val : 30},{num : 31, val : 31}];
+
+        this.days = [];
+        this.$.day_list.disabled = true;
       }
 
       static get is() { return 'reg-app'; }
@@ -685,6 +752,22 @@
             notify: true
           }
         };
+      }
+
+      _step1Error(msg){
+        this.$.error_container1.innerText = msg;
+      }
+
+      _step2Error(msg){
+        this.$.error_container2.innerText = msg;
+      }
+
+      _step3Error(msg){
+        this.$.error_container3.innerText = msg;
+      }
+
+      _step4Error(msg){
+        this.$.error_container4.innerText = msg;
       }
 
       _loadAllRegions(){
@@ -747,6 +830,18 @@
         //Validate inputs
         var app = this;
 
+        if(parseInt(this.$.programme_control.value) > 0){
+          this.user.program_id = this.$.programme_control.value;
+          this._showNormal(this.$.programme_control);
+
+          this.user.module = _.find(this.programmes, function(item){return item.id == app.user.program_id}).name;
+          this.notifyPath('user.module');
+        }else{
+          this._showError(this.$.programme_control);
+          this._step1Error('Please select a module');
+          return;
+        }
+
         if(this.$.fname.value.length >= 3 &&  !is_alpha_numeric(this.$.fname.value)){
           this._showNormal(this.$.fname);
 
@@ -754,6 +849,7 @@
           this.notifyPath('user.fname');
         }else{
           this._showError(this.$.fname);
+          this._step1Error('First Name cannot be empty');
           return;
         }
 
@@ -765,6 +861,7 @@
 
         }else{
           this._showError(this.$.lname);
+          this._step1Error('Last Name cannot be empty');
           return;
         }
 
@@ -775,7 +872,7 @@
           this.notifyPath('user.mname');
 
         }else{
-          this._showError(this.$.mname);
+          this._showWarning(this.$.mname);
         }
 
         if(parseInt(this.$.region_control.value) > 0){
@@ -783,6 +880,7 @@
           this._showNormal(this.$.region_control);
         }else{
           this._showError(this.$.region_control);
+          this._step1Error('Please select a region');
           return;
         }
 
@@ -794,10 +892,11 @@
           this.notifyPath('user.personal_district');
         }else{
           this._showError(this.$.district_control);
+          this._step1Error('Please select a district');
           return;
         }
 
-        if(this.$.town.value.length >= 3){
+        if(this.$.town.value.length >= 2){
           this._showNormal(this.$.town);
 
           this.user.town = this.$.town.value;
@@ -805,6 +904,7 @@
 
         }else{
           this._showError(this.$.town);
+          this._step1Error('Please select a town');
           return;
         }
 
@@ -817,19 +917,9 @@
 
           }else{
             this._showError(this.$.phone);
+            this._step1Error('Phone number is invalid');
             return;
           }
-        }
-
-        if(parseInt(this.$.programme_control.value) > 0){
-          this.user.program_id = this.$.programme_control.value;
-          this._showNormal(this.$.programme_control);
-
-          this.user.module = _.find(this.programmes, function(item){return item.id == app.user.program_id}).name;
-          this.notifyPath('user.module');
-        }else{
-          this._showError(this.$.programme_control);
-          return;
         }
 
         //Validate email and phone
@@ -872,6 +962,7 @@
           this.notifyPath('user.day');
         }else{
           this._showError(this.$.day_list);
+          this._step2Error('Please select day');
           return;
         }
 
@@ -881,6 +972,7 @@
           this.notifyPath('user.month');
         }else{
           this._showError(this.$.month_list);
+          this._step2Error('Please select month');
           return;
         }
 
@@ -890,6 +982,7 @@
           this.notifyPath('user.year');
         }else{
           this._showError(this.$.year_list);
+          this._step2Error('Please select year');
           return;
         }
 
@@ -903,6 +996,7 @@
           this.notifyPath('user.literacy_level');
         }else{
           this._showError(this.$.level);
+          this._step2Error('Please select literacy level');
           return;
         }
 
@@ -914,27 +1008,29 @@
           this.notifyPath('user.m_status');
         }else{
           this._showError(this.$.m_status);
+          this._step2Error('Please select marital status');
           return;
         }
 
         if(this.$.sick.value != 'none'){
           this.user.is_disabled = this.$.sick.value;
           this._showNormal(this.$.sick);
-          console.log(this.$.sick.value);
           this.notifyPath('user.is_disabled');
 
           if(this.$.sick.value == 'YES'){
-            console.log('Passed here ::: '+ this.$.sick.value);
             if(parseInt(this.$.sick_list.value) > 0){
               this._showNormal(this.$.sick_list);
               this.user.sick_id = this.$.sick_list.value;
             }else{
               this._showError(this.$.sick_list);
+              this._step2Error('Please select specific disability');
+              return;
             }
           }
 
         }else{
           this._showError(this.$.sick);
+          this._step2Error('Please answer disability question');
           return;
         }
 
@@ -945,18 +1041,20 @@
           this.notifyPath('user.id_type');
         }else{
           this._showError(this.$.id_type);
+          this._step2Error('Please select ID type');
           return;
         }
 
-        if(this.$.idn.value.length > 6){
-          this.user.id_number = this.$.idn.value;
-          this._showNormal(this.$.idn);
-          console.log(this.$.idn.value);
-          this.notifyPath('user.id_number');
-        }else{
-          this._showError(this.$.idn);
-          return;
-        }
+        // if(this.$.idn.value.length > 6){
+        //   this.user.id_number = this.$.idn.value;
+        //   this._showNormal(this.$.idn);
+        //   console.log(this.$.idn.value);
+        //   this.notifyPath('user.id_number');
+        // }else{
+        //   this._showError(this.$.idn);
+        //   this._step2Error('ID number invalid');
+        //   return;
+        // }
 
         if(this.$.idn.value.length > 7){
 
@@ -974,8 +1072,12 @@
           }
         }else{
           this._showError(this.$.idn);
+          this._step2Error('ID number invalid');
           return;
         }
+
+        this.user.id_number = this.$.idn.value;
+        this.notifyPath('user.id_number');
 
 
         this._validateID();
@@ -1002,6 +1104,7 @@
           this._showNormal(this.$.region_control_2);
         }else{
           this._showError(this.$.region_control_2);
+          this._step3Error('Please select a region');
           return;
         }
 
@@ -1013,6 +1116,7 @@
           this.notifyPath('user.district');
         }else{
           this._showError(this.$.district_control_2);
+          this._step3Error('Please select a district');
           return;
         }
 
@@ -1043,7 +1147,7 @@
             }else{
               this._showError(this.$.ezw);
               this._showError(this.$.ezw2);
-
+              this._step4Error('Please specific a valid EZWICH number');
               return;
             }
         }else{
@@ -1072,7 +1176,13 @@
 
       _showError(element){
         if(element){
-          element.style = 'border: 1px solid #c62828'
+          element.style = 'border: 1px solid #c62828';
+        }
+      }
+
+      _showWarning(element){
+        if(element){
+          element.style = 'border: 1px solid #f9a825';
         }
       }
 
@@ -1224,6 +1334,9 @@
           this._showError(this.$.ezw2);
           return;
         }else{
+
+          this._makeDateCall();
+
           this._showNormal(this.$.ezw);
           this._showNormal(this.$.ezw2);
 
@@ -1250,6 +1363,38 @@
 
       _onPrint(){
         window.print();
+      }
+
+      _makeDateCall(){
+        this.$.date.url = config.baseUrl+'/utils/today';
+        this.$.date.generateRequest();
+      }
+
+      _handleDateResponse(e){
+        if(e.detail.response){
+          this.user.reg_date = e.detail.response;
+          console.log('REG Date ::: '+this.user.reg_date);
+          this.notifyPath('user.reg_date');
+        }
+      }
+
+      _onMonthChange(e){
+        if(this.$.month_list.value == '09' || this.$.month_list.value == '04' || this.$.month_list.value == '06' || this.$.month_list.value == '11'){
+          this.set('days', this.default_days2);
+          this.notifyPath('days');
+        }else if(this.$.month_list.value == '02'){
+          this.set('days', this.default_days1);
+          this.notifyPath('days');
+        }else{
+          this.set('days', this.default_days3);
+          this.notifyPath('days');
+        }
+
+        if(this.$.month_list.value == '0'){
+          this.$.day_list.disabled = true;
+        }else{
+          this.$.day_list.disabled = false;
+        }
       }
     }
 
