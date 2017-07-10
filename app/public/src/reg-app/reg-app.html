@@ -213,6 +213,20 @@
                     </div>
                   </div>
 
+                   <div class="form-group">
+                    <label for="res" class="control-label col-sm-3">Residence Address</label>
+                    <div class="col-sm-9">
+                      <input id="res" class="form-control" type="text" name="res" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
+                   <div class="form-group">
+                    <label for="postal" class="control-label col-sm-3">Postal Address</label>
+                    <div class="col-sm-9">
+                      <input id="postal" class="form-control" type="text" name="postal" spellcheck="false" autocomplete="off" >
+                    </div>
+                  </div>
+
                   <div class="form-group">
                     <label for="town" class="control-label col-sm-3">Town</label>
                     <div class="col-sm-9">
@@ -332,16 +346,9 @@
                     <div class="col-sm-9">
                       <select id="level" class="form-control custom-select">
                         <option value="zero">- Select -</option>
-                        <option value="None">NONE</option>\
-                        <option value="BECE">BECE</option>
-                        <option value="SSCE/WASSCE">SSCE/WASSCE</option>
-                        <option value="Technical">Technical</option>
-                        <option value="Vocational">Vocational</option>
-                        <option value="Diploma">Diploma</option>
-                        <option value="HND">HND</option>
-                        <option value="Bachelor Degree">Bachelor Degree</option>
-                        <option value="Masters">Masters</option>
-                        <option value="Other">Other</option>
+                        <template is="dom-repeat" items="{{q_list}}" mutable-data>
+                            <option value='{{item.alias}}'>{{item.name}}</option>
+                        </template>
                       </select>
                     </div>
                   </div>
@@ -746,6 +753,13 @@
 
         this.days = [];
         this.$.day_list.disabled = true;
+
+
+        this.all_qualification_list = [{name : 'BECE', alias: 'BECE'},{name : 'SSCE/WASSCE', alias: 'SSCE/WASSCE'},{name : 'Technical', alias: 'Technical'},{name : 'Vocational', alias: 'Vocational'},{name : 'Diploma', alias: 'Diploma'},{name : 'HND', alias: 'HND'},{name : 'Bachelor Degree', alias: 'Bachelor Degree'},{name : 'Masters', alias: 'Masters'},{name : 'Other', alias: 'Other'}];
+
+        this.filtered_qualification_list = [{name : 'HND', alias: 'HND'},{name : 'Degree', alias: 'Degree'},{name : 'Masters', alias: 'Masters'},{name : 'PHD', alias: 'PHD'}];
+
+
       }
 
       static get is() { return 'reg-app'; }
@@ -901,6 +915,26 @@
           return;
         }
 
+        if(this.$.res.value.length >= 3 &&  !is_alpha_numeric(this.$.res.value)){
+          this._showNormal(this.$.res);
+
+          this.user.residence_address = this.$.res.value;
+          this.notifyPath('user.residence_address');
+        }else{
+          this._showWarning(this.$.res);
+          this._step1Error('Residence Address is empty');
+        }
+
+        if(this.$.postal.value.length >= 3){
+          this._showNormal(this.$.postal);
+
+          this.user.postal_address = this.$.postal.value;
+          this.notifyPath('user.postal_address');
+        }else{
+          this._showWarning(this.$.postal);
+          this._step1Error('Postal Address cannot be empty');
+        }
+
         if(this.$.town.value.length >= 2){
           this._showNormal(this.$.town);
 
@@ -928,6 +962,18 @@
         //}
 
         //Validate email and phone
+
+        console.log('module ::: '+this.user.module);
+        if(this.user.module == 'Youth In Graduate Internship'){
+          //this.q_list = this.filtered_qualification_list;
+          this.set('q_list', this.filtered_qualification_list);
+          this.notifyPath('q_list');
+        }else{
+          //this.q_list = this.all_qualification_list;
+          this.set('q_list', this.all_qualification_list);
+          this.notifyPath('q_list');
+        }
+
 
         this._loadAllSicks();
 

@@ -31,6 +31,12 @@ var member = function(sequelize){
 	  msisdn: {
 	    type: Sequelize.STRING,
 	  },
+	  residence_address: {
+	    type: Sequelize.STRING,
+	  },
+	  postal_address: {
+	    type: Sequelize.STRING,
+	  },
 	  skill:{
 	  	type: Sequelize.STRING,
 	  },

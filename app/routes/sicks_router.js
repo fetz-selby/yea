@@ -23,9 +23,6 @@ var routes = function(Sick){
                   });
 
                 }); 
-
-   
-    
     
     return {router: sickRouter, event: EventEmitter};
 };
