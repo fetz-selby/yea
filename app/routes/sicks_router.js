@@ -10,7 +10,7 @@ var routes = function(Sick){
     sickRouter.route('/')
                 .get(function(req, res){
                               
-                  Sick.findAll().then(sicks => {
+                  Sick.findAll({where : {status : 'A'}}).then(sicks => {
                     res.status(200).json(sicks);
                   })
 

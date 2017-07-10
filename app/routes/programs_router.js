@@ -7,7 +7,7 @@ var routes = function(Program){
 
     programRouter.route('/')
         .get(function(req, res){  
-            Program.findAll().then(programs =>{
+            Program.findAll({where : {status : 'A'}, order:[['name', 'ASC']]}).then(programs =>{
                 res.status(200).json(programs);
             })
         });   

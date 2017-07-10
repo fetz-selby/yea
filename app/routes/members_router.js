@@ -9,7 +9,7 @@ var routes = function(Member){
 
     memberRouter.route('/')
     .get(function(req, res){
-        Member.findAll().then(members =>{
+        Member.findAll({where : {status : 'A'}}).then(members =>{
             res.status(200).json(members);
         })
 

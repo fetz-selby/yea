@@ -31,6 +31,9 @@ var member = function(sequelize){
 	  msisdn: {
 	    type: Sequelize.STRING,
 	  },
+	  skill:{
+	  	type: Sequelize.STRING,
+	  },
 	  m_status: {
 		type:   Sequelize.ENUM,
     	values: ['SINGLE', 'MARRIED', 'DIVORCED']	  
@@ -39,7 +42,7 @@ var member = function(sequelize){
 		type:   Sequelize.ENUM,
     	values: ['YES', 'NO']
       },
-	  literacy_level: {
+	  qualification: {
 		type:   Sequelize.ENUM,
     	values: ['NONE', 'BECE', 'SSCE/WASSCE', 'TECHNICAL', 'VOCATIONAL', 'DIPLOMA', 'HND', 'BACHELOR DEGREE', 'MASTERS', 'OTHER']	  
       },

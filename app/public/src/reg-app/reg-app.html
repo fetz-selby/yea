@@ -328,7 +328,7 @@
                  </div>
 
                   <div class="form-group">
-                    <label class="col-sm-3 control-label" for="level">Literate/Illiterate</label>
+                    <label class="col-sm-3 control-label" for="level">Qualification</label>
                     <div class="col-sm-9">
                       <select id="level" class="form-control custom-select">
                         <option value="zero">- Select -</option>
@@ -343,6 +343,13 @@
                         <option value="Masters">Masters</option>
                         <option value="Other">Other</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="skill" class="col-sm-3 control-label">Other Skills</label>
+                    <div class="col-sm-9">
+                    <input id="skill" class="form-control" type="text" name="skill">
                     </div>
                   </div>
 
@@ -425,8 +432,6 @@
 
 
            <div id="step3" class="tab-pane custom-hide">
-
-
               <div class="row">
                 <div class="col-sm-8 col-sm-offset-2">
                   <div class="form-group">
@@ -908,7 +913,7 @@
           return;
         }
 
-        if(this.$.phone.value){
+        //if(this.$.phone.value){
           if(is_phone_valid(this.$.phone.value)){
             this._showNormal(this.$.phone);
 
@@ -920,7 +925,7 @@
             this._step1Error('Phone number is invalid');
             return;
           }
-        }
+        //}
 
         //Validate email and phone
 
@@ -990,13 +995,24 @@
         this.notifyPath('user.dob');
 
         if(this.$.level.value != 'zero'){
-          this.user.literacy_level = this.$.level.value;
+          this.user.qualification = this.$.level.value;
           this._showNormal(this.$.level);
-          console.log(this.user.literacy_level);
-          this.notifyPath('user.literacy_level');
+          console.log(this.user.qualification);
+          this.notifyPath('user.qualification');
         }else{
           this._showError(this.$.level);
-          this._step2Error('Please select literacy level');
+          this._step2Error('Please select qualification');
+          return;
+        }
+
+        if(this.$.skill.value.length >= 3 &&  !is_alpha_numeric(this.$.skill.value)){
+          this._showNormal(this.$.skill);
+
+          this.user.skill = this.$.skill.value;
+          this.notifyPath('user.skill');
+        }else{
+          this._showError(this.$.skill);
+          this._step2Error('invalid skill specified');
           return;
         }
 
@@ -1147,12 +1163,13 @@
             }else{
               this._showError(this.$.ezw);
               this._showError(this.$.ezw2);
-              this._step4Error('Please specific a valid EZWICH number');
+              this._step4Error('Please specify a valid EZWICH number');
               return;
             }
         }else{
           this._showError(this.$.ezw);
           this._showError(this.$.ezw2);
+          this._step4Error('Please specify a valid EZWICH number');
 
           return;
         }
