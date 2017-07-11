@@ -1378,6 +1378,7 @@
       _handleValideIdResponse(e){
         if(e.detail.response){
           this._showError(this.$.idn);
+          this._step2Error('ID already exist');
           return;
         }else{
           this._showNormal(this.$.idn);
@@ -1389,6 +1390,11 @@
           this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
         }
+      }
+
+      _onIdErrorRequest(e){
+        this._showError(this.$.idn);
+        this._step2Error('Error with connection');
       }
 
       _handleValideEzwichResponse(e){
