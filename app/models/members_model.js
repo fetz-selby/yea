@@ -50,7 +50,7 @@ var member = function(sequelize){
       },
 	  qualification: {
 		type:   Sequelize.ENUM,
-    	values: ['NONE', 'BECE', 'SSCE/WASSCE', 'TECHNICAL', 'VOCATIONAL', 'DIPLOMA', 'UNIVERSITY DIPLOMA','HND', 'BACHELOR DEGREE', 'MASTERS', 'OTHER']	  
+    	values: ['NONE', 'BECE', 'SSCE/WASSCE', 'TECHNICAL', 'VOCATIONAL', 'DIPLOMA', 'UNIVERSITY DIPLOMA','HND', 'BACHELOR DEGREE', 'MASTERS', 'PHD', 'OTHER']	  
       },
 	  id_type: {
 	    type: Sequelize.STRING

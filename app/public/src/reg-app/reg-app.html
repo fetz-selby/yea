@@ -428,7 +428,7 @@
                       <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onMoveTwoBack">Back</button>
                     </div>
                     <div class="col-sm-6">  
-                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveTwo">Next</button>
+                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveTwo">{{s2next}}</button>
                     </div>
                   </div>
 
@@ -559,7 +559,7 @@
                       <button class="btn btn-primary btn-block btn-next" type="button"  on-click="_onMoveFourBack">Back</button>
                     </div>
                     <div class="col-sm-6">
-                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveFour">Review</button>
+                      <button class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onMoveFour">{{s4Review}}</button>
                     </div>
                   </div>
                   
@@ -737,6 +737,7 @@
       connectedCallback(){
         super.ready();
 
+
         this.$.step1.style = 'display:block;';
         this.$.step1_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;'
 
@@ -755,10 +756,12 @@
         this.$.day_list.disabled = true;
 
 
-        this.all_qualification_list = [{name : 'NONE', alias: 'NONE'},{name : 'BECE', alias: 'BECE'},{name : 'SSCE/WASSCE', alias: 'SSCE/WASSCE'},{name : 'Technical', alias: 'Technical'},{name : 'Vocational', alias: 'Vocational'},{name : 'Diploma', alias: 'Diploma'}];
+        this.all_qualification_list = [{name : 'NONE', alias: 'NONE'},{name : 'BECE', alias: 'BECE'},{name : 'SSCE/WASSCE', alias: 'SSCE/WASSCE'},{name : 'Technical', alias: 'Technical'},{name : 'Vocational', alias: 'Vocational'},{name : 'Diploma', alias: 'Diploma'},{name : 'Other', alias: 'Other'}];
 
         this.filtered_qualification_list = [{name : 'University Diploma', alias: 'University Diploma'},{name : 'HND', alias: 'HND'},{name : 'Degree', alias: 'Degree'},{name : 'Masters', alias: 'Masters'},{name : 'PHD', alias: 'PHD'}];
 
+        this.s2next = 'Next';
+        this.s4Review = 'Review';
 
       }
 
@@ -977,7 +980,8 @@
 
         this._loadAllSicks();
 
-        
+        this._step1Error('');
+
         this.$.step1.style = '';
         this.$.step1_wiz.style = '';
 
@@ -994,7 +998,11 @@
 
       _onMoveTwo(e){
         //Validate inputs
+
+
         var app = this;
+
+
 
         if(this.$.m_check.checked){
           this.user.gender = 'MALE';
@@ -1107,17 +1115,6 @@
           return;
         }
 
-        // if(this.$.idn.value.length > 6){
-        //   this.user.id_number = this.$.idn.value;
-        //   this._showNormal(this.$.idn);
-        //   console.log(this.$.idn.value);
-        //   this.notifyPath('user.id_number');
-        // }else{
-        //   this._showError(this.$.idn);
-        //   this._step2Error('ID number invalid');
-        //   return;
-        // }
-
         if(this.$.idn.value.length > 7){
 
           if(this.$.id_type.value == 'VOTERS' && is_valid_voter(this.$.idn.value)){
@@ -1141,6 +1138,9 @@
         this.user.id_number = this.$.idn.value;
         this.notifyPath('user.id_number');
 
+
+        this.set('s2next', 'Loading ...');
+        this.notifyPath('s2next');
 
         this._validateID();
 
@@ -1182,6 +1182,9 @@
           return;
         }
 
+
+        this._step3Error('');
+
         this.$.step3.style = '';
         this.$.step3_wiz.style = '';
 
@@ -1220,6 +1223,7 @@
           return;
         }
 
+        this.set('s4Review', 'Loading');
         this._validateEzwich();
 
         // this.$.step4.style = '';
@@ -1383,6 +1387,7 @@
         }else{
           this._showNormal(this.$.idn);
 
+          this._step2Error('');
           this.$.step2.style = '';
           this.$.step2_wiz.style = '';
 
@@ -1390,6 +1395,9 @@
           this.$.step3_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
 
         }
+
+        this.set('s2next', 'Next');
+        this.notifyPath('s2next');
       }
 
       _onIdErrorRequest(e){
@@ -1409,12 +1417,18 @@
           this._showNormal(this.$.ezw);
           this._showNormal(this.$.ezw2);
 
+          this._step4Error('');
+
+
           this.$.step4.style = '';
           this.$.step4_wiz.style = '';
 
           this.$.step5.style = 'display:block;';
           this.$.step5_wiz.style = 'color:#d9230f; border:2px solid #d9230f; background-color:#ffffff;';
         }
+
+        this.set('s4Review', 'Review');
+        this.notifyPath('s4Review');
       }
 
       _handleSickResponse(e){
