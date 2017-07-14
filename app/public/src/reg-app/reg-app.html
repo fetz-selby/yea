@@ -758,7 +758,7 @@
 
         this.all_qualification_list = [{name : 'NONE', alias: 'NONE'},{name : 'BECE', alias: 'BECE'},{name : 'SSCE/WASSCE', alias: 'SSCE/WASSCE'},{name : 'Technical', alias: 'Technical'},{name : 'Vocational', alias: 'Vocational'},{name : 'Diploma', alias: 'Diploma'},{name : 'Other', alias: 'Other'}];
 
-        this.filtered_qualification_list = [{name : 'University Diploma', alias: 'University Diploma'},{name : 'HND', alias: 'HND'},{name : 'Degree', alias: 'Degree'},{name : 'Masters', alias: 'Masters'},{name : 'PHD', alias: 'PHD'}];
+        this.filtered_qualification_list = [{name : 'University Diploma', alias: 'University Diploma'},{name : 'HND', alias: 'HND'},{name : 'Bachelor Degree', alias: 'Bachelor Degree'},{name : 'Masters', alias: 'Masters'},{name : 'PHD', alias: 'PHD'}];
 
         this.s2next = 'Next';
         this.s4Review = 'Review';
@@ -1302,7 +1302,7 @@
 
       _handleRegisterResponse(e){
         if(e.detail.response){
-          this.user.yea_id = e.detail.response[0].yea_id;
+          this.user.yea_id = e.detail.response.yea_id;
           this.notifyPath('user.yea_id');
 
           JsBarcode(this.$.barcode, this.user.yea_id);
