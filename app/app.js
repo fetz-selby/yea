@@ -65,7 +65,7 @@ var usersRoute = require('./routes/users_router')(users),
     regionsRoute = require('./routes/regions_router')(regions),
     districtsRoute = require('./routes/districts_router')(districts),
     programsRoute = require('./routes/programs_router')(programs),
-    registerRoute = require('./routes/register_router')(members),
+    registerRoute = require('./routes/register_router')(members, regions, districts, programs),
     sickRoute = require('./routes/sicks_router')(sicks),
     utilsRoute = require('./routes/utils_router')(utils),
     authRoute = require('./routes/auth_router')(pool);
@@ -109,7 +109,14 @@ app.use(function (req, res, next) {
 
 app.get('/', function(req, res){
     res.redirect('./index.html');
-    //res.location('/index.html');
+});
+
+app.get('/home', function(req, res){
+    res.redirect('./home.html');
+});
+
+app.get('/register', function(req, res){
+    res.redirect('./register.html');
 });
 
 app.use('/eghana/yea/api/regions', regionsRoute.router);
@@ -120,7 +127,6 @@ app.use('/eghana/yea/api/users', usersRoute.router);
 app.use('/eghana/yea/api/register', registerRoute.router);
 app.use('/eghana/yea/api/sicks', sickRoute.router);
 app.use('/eghana/yea/api/utils', utilsRoute.router);
-
 
 
 
