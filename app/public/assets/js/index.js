@@ -5,8 +5,8 @@ $(document).ready(function(){
 		make_req(yea_id);
 	});
 
-	$('.close').click(function(){
-		$('#my_modal').attr('style', 'display:none;');
+	$('#close_btn').click(function(){
+		$('#login_modal').attr('style', 'display:none;');
 	})
 
 	var make_req = function(id){
@@ -27,7 +27,7 @@ $(document).ready(function(){
 			window.location= "/home";
 		}else{
 			//Show popup and redirect to reg. page
-			$('#my_modal').attr('style', 'display:block;');
+			$('#login_modal').attr('style', 'display:block;');
 			//$('.close').attr('style', 'display:block;');
 
 		}

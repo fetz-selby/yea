@@ -354,6 +354,13 @@
                   </div>
 
                   <div class="form-group">
+                    <label for="f_study" class="col-sm-3 control-label">Field of Study</label>
+                    <div class="col-sm-9">
+                    <input id="f_study" class="form-control" type="text" name="f_study">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
                     <label for="skill" class="col-sm-3 control-label">Other Skills</label>
                     <div class="col-sm-9">
                     <input id="skill" class="form-control" type="text" name="skill">
@@ -647,7 +654,7 @@
               <div class="col-sm-9">
 
                 <div class="form-group">
-                  <div class="col-sm-12 control-label" for="region_control" style="font-size: 14px; padding: 0 !important;">Congratulations {{user.fname}}, for registering with the Youth Employment Agency. If you are selected for the module of your choice, you will be notified. <p> Please log in to <a href="www.yea.gov.gh">www.yea.gov.gh</a> to check your status.</div>
+                  <div class="col-sm-12 control-label" for="region_control" style="font-size: 14px; padding: 0 !important;">Congratulations {{user.fname}}, for registering with the Youth Employment Agency. If you are selected for the module of your choice, you will be notified. <p> Please log in to <a href="/">www.yea.gov.gh</a> to check your status.</div>
                 </div>
 
                 <div class="form-group">
@@ -1056,6 +1063,17 @@
         }else{
           this._showError(this.$.level);
           this._step2Error('Please select qualification');
+          return;
+        }
+
+        if(this.$.f_study.value.length >= 3 &&  !is_alpha_numeric(this.$.f_study.value)){
+          this._showNormal(this.$.f_study);
+
+          this.user.study_field = this.$.f_study.value;
+          this.notifyPath('user.study_field');
+        }else{
+          this._showError(this.$.f_study);
+          this._step2Error('Please specify field of study');
           return;
         }
 

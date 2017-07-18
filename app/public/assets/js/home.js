@@ -5,9 +5,27 @@ $(document).ready(function(){
 		return;
 	}
 
+	var yea_id = '';
+
 	$('#print_btn').click(function(){
 		window.print();
-	})
+	});
+
+	$('#save_btn').click(function(){
+		var field_study = $('#study_area').val();
+
+		$.ajax({
+  			url: '/eghana/yea/api/register/'+yea_id,
+  			method : 'PUT',
+  			data: {study_field : field_study},
+  			success: updated_response,
+  			dataType: 'json'
+		});
+
+		$(this).attr('disabled', '');
+		$(this).text('Saving ...');
+
+	});
 
 
 	var districts = [];
@@ -62,6 +80,19 @@ $(document).ready(function(){
 
 		$('#loader').attr('style', 'display:none');
 		$('#main_app').attr('style', '');
+
+		if(!obj.study_field){
+			//show popup to take detail
+			$('#additional_modal').attr('style', 'display:block;')
+		}
+
+		yea_id = obj.yea_id;
+	}
+
+	var updated_response = function(data, status, req){
+		if(data){
+			$('#additional_modal').attr('style', 'display:none;');
+		}
 	}
 
 

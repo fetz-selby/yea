@@ -37,6 +37,9 @@ var member = function(sequelize){
 	  postal_address: {
 	    type: Sequelize.STRING,
 	  },
+	  study_field:{
+	  	type: Sequelize.STRING,
+	  },
 	  skill:{
 	  	type: Sequelize.STRING,
 	  },

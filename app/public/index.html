@@ -21,14 +21,23 @@
 
     <body>
 
-        <!-- The Modal -->
-        <div id="my_modal" class="modal">
-
+        <div id="login_modal" class="modal">
           <!-- Modal content -->
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <p>Your details were not captured by the system.  Please click on the below to <a href="/register">register</a> again.
-             <a href="/register">www.yea.gov.gh</a></p>
+          <div class="modal-content-login">                    
+            <div class="additional-modal-login">
+                <div class="title-login">
+                    <p>Your details were not captured by the system.  Please click on the below to 
+                        <a href="/register">register</a> again.
+                        <a href="/register">www.yea.gov.gh</a>
+                    </p>
+                </div>
+                <div class="clearfix-lg"></div>
+               
+                <div class="clearfix"></div>
+                <div class="action-container-login">
+                    <button id="close_btn" class="close-login">close</button>
+                </div>
+            </div>
           </div>
         </div>
 
@@ -49,7 +58,7 @@
 
                             <div class="form-group row">
                                 <div class="col-12">
-                                    <input id="yea_id" class="form-control" type="text" required="" placeholder="YEA ID">
+                                    <input id="yea_id" class="form-control" type="text" required="" placeholder="YEA Number">
                                 </div>
                             </div>
 
@@ -62,7 +71,7 @@
 
                             <div class="form-group m-t-10 mb-0 row">
                                 <div class="col-sm-5 m-t-20">
-                                    <a href="/register" class="text-muted"><i class="mdi mdi-account-circle"></i> Register</a>
+                                    <a href="/register" class="text-muted register-style"><i class="mdi mdi-account-circle"></i> Register</a>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 2; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -21,6 +21,16 @@
     width: 80%; /* Could be more or less, depending on screen size */
 }
 
+.modal-content-additional {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 1px solid #e53935;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 18%;
+    border-radius: 5px;
+}
+
 /* The Close Button */
 .close {
     color: #aaa;
@@ -35,6 +45,13 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.register-style{
+    padding: 7px 20px 7px 20px;
+    background: #0277bd;
+    color: #ffffff !important;
+    border-radius: 5px;
 }
 
 .custom-pending-btn{
@@ -60,3 +77,124 @@
 .custom-header-color{
     color: #FEFEFE;
 }
+
+.clearfix{
+    clear : both;
+    height: 2px;
+}
+
+.clearfix-lg{
+    clear : both;
+    height: 10px;
+}
+
+.additional-modal{
+    width: 100%;
+}
+
+.additional-modal .title{
+    float: left;
+    font-size: 16px;
+    padding: 4px;
+}
+
+.additional-modal .field-container{
+    float: left;
+    width: 100%;
+}
+
+.additional-modal .field-container .fieldname-col{
+    float: left;
+    width: 100%;
+    color: #c62828;
+    font-weight: 500;
+}
+
+.additional-modal .field-container .fieldval-col{
+    float: left;
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.additional-modal .action-container{
+    float: left;
+    width: 100%;
+}
+
+.additional-modal .action-container .save{
+    float: right;
+    width: 20%;
+    padding: 8px 15px 10px 15px;
+    background: #e53935;
+    text-transform: uppercase;
+    border: none;
+    color: #eaeaea;
+    font-weight: 500;
+}
+
+
+.modal-content-login {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 1px solid #e53935;
+    width: 50%; /* Could be more or less, depending on screen size */
+    height: 14.2%;
+    border-radius: 5px;
+}
+
+.additional-modal-login{
+    width: 100%;
+}
+
+.additional-modal-login .title-login{
+    float: left;
+    font-size: 16px;
+    padding: 4px;
+}
+
+.additional-modal-login .field-container-login{
+    float: left;
+    width: 100%;
+}
+
+.additional-modal-login .field-container-login .fieldname-col-login{
+    float: left;
+    width: 100%;
+    color: #c62828;
+    font-weight: 500;
+}
+
+.additional-modal-login .field-container-login .fieldval-col-login{
+    float: left;
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+.additional-modal-login .action-container-login{
+    float: left;
+    width: 100%;
+}
+
+.additional-modal-login .action-container-login .close-login{
+    float: right;
+    width: 20%;
+    padding: 8px 15px 10px 15px;
+    background: #e53935;
+    text-transform: uppercase;
+    border: none;
+    color: #eaeaea;
+    font-weight: 500;
+}
+
+
+
+
+
+
+
+
+
+
+
+

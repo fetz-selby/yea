@@ -27,10 +27,9 @@ var routes = function(Member, Region, District, Program){
                 });      
         });
 
- registerRouter.route('/:id')
+    registerRouter.route('/:id')
         .get(function(req, res){
             var yea_id = req.params.id;
-
 
             Member.findOne({ where : {yea_id : yea_id},  include: [District, Program, Region] }).then(member =>{
                
@@ -73,12 +72,22 @@ var routes = function(Member, Region, District, Program){
 
                     new_member.created = dateFormat(new Date(member.created_at), "dddd, mmmm dS, yyyy");
                     new_member.b_date = dateFormat(new Date(member.dob), "dddd, mmmm dS, yyyy");
+                    new_member.study_field = member.study_field;
 
                     res.status(200).json(new_member);
                 }else{
                     res.status(200).json(member);
                 }
 
+            });       
+        });
+
+        registerRouter.route('/:id')
+        .put(function(req, res){
+            var yea_id = req.params.id;
+            Member.update({study_field : req.body.study_field},{ where : {yea_id : yea_id}}).then(member =>{
+               
+                res.status(200).json(member);
             });       
         });
     
