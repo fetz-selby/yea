@@ -71,7 +71,7 @@ var routes = function(Member, Region, District, Program){
                     new_member.region.name = member.region.name;
 
                     new_member.created = dateFormat(new Date(member.created_at), "dddd, mmmm dS, yyyy");
-                    new_member.b_date = dateFormat(new Date(member.dob), "dddd, mmmm dS, yyyy");
+                    new_member.b_date = member.dob.split(' ')[0];
                     new_member.study_field = member.study_field;
 
                     res.status(200).json(new_member);

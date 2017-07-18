@@ -27,7 +27,7 @@
     padding: 10px;
     border: 1px solid #e53935;
     width: 50%; /* Could be more or less, depending on screen size */
-    height: 18%;
+    height: 25%;
     border-radius: 5px;
 }
 
@@ -139,7 +139,7 @@
     padding: 10px;
     border: 1px solid #e53935;
     width: 50%; /* Could be more or less, depending on screen size */
-    height: 14.2%;
+    height: 19%;
     border-radius: 5px;
 }
 
@@ -186,15 +186,3 @@
     color: #eaeaea;
     font-weight: 500;
 }
-
-
-
-
-
-
-
-
-
-
-
-
