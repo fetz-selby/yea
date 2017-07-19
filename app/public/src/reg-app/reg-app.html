@@ -631,7 +631,7 @@
                     <button class="btn btn-primary btn-block btn-next" type="button" on-click="_onRegisterBack">Back</button>
                   </div>
                   <div class="col-sm-6">
-                    <button id="register_btn" class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onRegister">Register</button>
+                    <button id="register_btn" class="btn btn-primary btn-block btn-next nxt-btn" type="button" on-click="_onRegister">{{register_name}}</button>
                   </div>
                 </div>
                 
@@ -769,6 +769,7 @@
 
         this.s2next = 'Next';
         this.s4Review = 'Review';
+        this.register_name = 'Register';
 
       }
 
@@ -1334,6 +1335,7 @@
       }
 
       _onRegister(e){
+        this.register_name = 'Loading';
         this.$.register_btn.disabled = 'true';
         this._saveDetails();
       }
